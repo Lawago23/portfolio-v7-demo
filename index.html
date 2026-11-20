@@ -1,7 +1,8 @@
 <!doctype html>
-<html lang="de">
+<html lang="de" translate="no">
 <head>
 <meta charset="utf-8">
+<meta name="google" content="notranslate">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Websites für Gastro aus Mayen · Renat</title>
 <meta name="description" content="Zehn Seiten, zehn Gesichter: Websites für Imbiss, Pizzeria, Döner, Bäckerei, Café, Salon und Restaurant in Mayen. Ab 120 Euro, in vier Tagen online.">
@@ -1373,7 +1374,7 @@ function renderSlides() {
       '<h2>' + s.n + '</h2>' +
       '<p><b>' + tag + '.</b> ' + desc + '</p>' +
       '<div class="frame">' +
-        '<div class="bar"><i></i><i></i><i></i><u>' + s.live_u.replace('https://', '') + '</u></div>' +
+        '<div class="bar"><i></i><i></i><i></i><u translate="no">' + s.n + '</u></div>' +
         '<div class="shots"><iframe title="' + s.n + '" data-src="' + (s.live_u || s.u) + '" loading="lazy" tabindex="-1" class="on" style="width:1440px;height:900px"></iframe></div>' +
       '</div>' +
       '<a href="' + s.live_u + '" target="_blank" rel="noopener">' + btnText + '</a>' +
@@ -1414,7 +1415,7 @@ function set(i) {
   txt.forEach(function(e, j){ e.classList.toggle('on', j === i); });
   dots.forEach(function(e, j){ e.classList.toggle('on', j === i); });
   var urlEl = document.getElementById('url');
-  if (urlEl) urlEl.textContent = s.live_u.replace('https://', '');
+  if (urlEl) urlEl.textContent = s.n;
 }
 
 var work = document.querySelector('.work');
