@@ -327,9 +327,9 @@ html[lang="ru"] .t-de { display: none !important; }
 .work {
   position: relative;
   height: calc(100svh * 10.8);
-  background: var(--stage);
-  color: var(--stage-ink);
-  transition: background 0.7s ease, color 0.7s ease;
+  --g1: #1b263b; --g2: #2a2150; --g3: #5b1d58; --ang: 160deg;
+  background: linear-gradient(var(--ang), var(--g1) 0%, var(--g2) 48%, var(--g3) 100%);
+  color: #f6f1f6;
 }
 
 .work .pin {
@@ -1405,11 +1405,6 @@ function set(i) {
   if (i === cur) return;
   cur = i;
   var s = S[i];
-  var workEl = document.querySelector('.work');
-  if (workEl) {
-    workEl.style.setProperty('--stage', s.bg);
-    workEl.style.setProperty('--stage-ink', s.ink);
-  }
   ifr.forEach(function(f, j){
     if (Math.abs(j - i) <= 1 && !f.src) f.src = f.dataset.src;
     f.classList.toggle('on', j === i);
@@ -1423,11 +1418,35 @@ function set(i) {
 }
 
 var work = document.querySelector('.work');
+// Slow iridescent background: navy -> violet -> raspberry, drifting with scroll (eased)
+var PAL = [[27,38,59],[42,33,80],[91,29,88],[247,37,133],[122,29,90],[27,38,59]];
+function palAt(x) {
+  x = ((x % 1) + 1) % 1 * (PAL.length - 1);
+  var i = Math.min(PAL.length - 2, Math.floor(x)), f = x - i;
+  f = f * f * (3 - 2 * f);
+  var a = PAL[i], b = PAL[i + 1];
+  return 'rgb(' + [0,1,2].map(function(k){ return Math.round(a[k] + (b[k] - a[k]) * f); }).join(',') + ')';
+}
+var tgtP = 0, smP = 0, bgRaf = 0;
+function bgLoop(ts) {
+  smP += (tgtP - smP) * 0.035;
+  var drift = rm ? 0 : Math.sin(ts / 5200) * 0.03;
+  var x = smP * 0.72 + drift;
+  if (work) {
+    work.style.setProperty('--g1', palAt(x));
+    work.style.setProperty('--g2', palAt(x + 0.16));
+    work.style.setProperty('--g3', palAt(x + 0.34));
+    work.style.setProperty('--ang', (150 + smP * 70 + Math.sin(ts / 7000) * 8).toFixed(1) + 'deg');
+  }
+  bgRaf = requestAnimationFrame(bgLoop);
+}
+bgRaf = requestAnimationFrame(bgLoop);
 function onScroll() {
   if (!work) return;
   var r = work.getBoundingClientRect(),
       tot = r.height - innerHeight,
       p = Math.min(1, Math.max(0, -r.top / tot));
+  tgtP = p;
   set(Math.min(S.length - 1, Math.floor(p * S.length * 0.999)));
 
   var steps = document.getElementById('steps');
