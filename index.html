@@ -1240,8 +1240,8 @@ html[lang="ru"] .t-de { display: none !important; }
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_next" value="https://lawago23.github.io/portfolio-v7-demo/?sent=1">
       <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
-      <input type="text" name="name" required placeholder="Name / Имя" autocomplete="name">
-      <input type="text" name="kontakt" required placeholder="Telefon oder E-Mail / Телефон или почта">
+      <input type="text" id="lf-name" name="name" required placeholder="Name / Имя" autocomplete="given-name name" autocapitalize="words">
+      <input type="text" id="lf-kontakt" name="email" required placeholder="Telefon oder E-Mail / Телефон или почта" autocomplete="email" inputmode="email" autocapitalize="none" autocorrect="off">
       <textarea name="message" rows="3" placeholder="Nachricht / Сообщение"></textarea>
       <button type="submit" class="btn-channel"><span class="t-de">Anfrage senden</span><span class="t-ru">Отправить заявку</span></button>
     </form>
@@ -1592,18 +1592,19 @@ try {
 <script>
 (function(){
   var f=document.querySelector('form.lead-form'); if(!f) return;
+  try{var sv=JSON.parse(localStorage.getItem('lf')||'{}'); if(sv.n) f.name.value=sv.n; if(sv.k) f.elements['email'].value=sv.k;}catch(e){}
   var st=document.createElement('p'); st.className='lead-status'; st.style.cssText='margin:6px 0 0;text-align:center;font-weight:600'; f.appendChild(st);
   f.addEventListener('submit',function(e){
     e.preventDefault();
-    var b=f.querySelector('button'); b.disabled=true;
-    var d={name:f.name.value,kontakt:f.kontakt.value,message:f.message.value,_subject:'Neue Anfrage vom Portfolio',_captcha:'false'};
+    var b=f.querySelector('button'); b.disabled=true; try{localStorage.setItem('lf',JSON.stringify({n:f.name.value,k:f.elements['email'].value}));}catch(e){}
+    var d={name:f.name.value,kontakt:f.elements['email'].value,message:f.message.value,_subject:'Neue Anfrage vom Portfolio',_captcha:'false'};
     var txt='Hallo Renat, Anfrage von der Website.\nName: '+d.name+'\nKontakt: '+d.kontakt+'\n'+d.message;
     var wa='https://wa.me/4915158817217?text='+encodeURIComponent(txt);
     var ctl=new AbortController(); var t=setTimeout(function(){ctl.abort();},8000);
     st.textContent='Wird gesendet … / Отправляем …';
     fetch('https://formsubmit.co/ajax/d8dd22face493f38c07381b53a1c9db1',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(d),signal:ctl.signal})
       .then(function(r){clearTimeout(t); if(!r.ok) throw 0; return r.json();})
-      .then(function(j){ if(j&&(j.success===true||j.success==='true')){st.textContent='Danke, ich melde mich bald. / Спасибо, скоро отвечу.'; f.reset(); b.disabled=false;} else throw 0;})
+      .then(function(j){ if(j&&(j.success===true||j.success==='true')){st.textContent='Danke, ich melde mich bald. / Спасибо, скоро отвечу.'; b.disabled=false;} else throw 0;})
       .catch(function(){ st.innerHTML='Senden hat nicht geklappt. <a href="'+wa+'" style="text-decoration:underline">Per WhatsApp senden / Отправить в WhatsApp</a>'; b.disabled=false; window.location.href=wa; });
   });
 })();
