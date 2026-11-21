@@ -287,7 +287,7 @@ html.static h1 .w>span{animation:none;transform:none}html.static .lead,html.stat
       <div class="status rv" id="status"><i></i><span id="stt">Öffnungszeiten werden geprüft</span></div>
       <h2 class="h rv" style="--dl:1;margin-bottom:0">Komm vorbei <em>oder bestell.</em></h2>
       <p class="addr rv"><b>AURUM Rösterei</b><br>Am Alten Bahnhof 4 · 56727 Mayen<br>Beispieladresse, frei erfunden</p>
-      <div class="row" style="opacity:1;animation:none;margin-top:0"><a class="btn acc" href="https://wa.me/4915100000000" rel="noopener">Per WhatsApp schreiben</a><a class="btn o" href="https://www.google.com/maps/search/?api=1&amp;query=50.3269,7.2243" target="_blank" rel="noopener">Route anzeigen</a></div>
+      <div class="row" style="opacity:1;animation:none;margin-top:0"><a class="btn acc" href="https://wa.me/4915158817217" rel="noopener">Per WhatsApp schreiben</a><a class="btn o" href="tel:+4915158817217">Anrufen</a><a class="btn o" href="https://www.google.com/maps/search/?api=1&amp;query=50.3269,7.2243" target="_blank" rel="noopener">Route anzeigen</a></div>
     </div>
     <ul class="hours rv" id="hours">
       <li data-d="2,3,4,5"><span>Dienstag bis Freitag</span>09:00 – 17:00</li>
@@ -304,7 +304,7 @@ html.static h1 .w>span{animation:none;transform:none}html.static .lead,html.stat
   <span><a class="ul" href="#top">Impressum</a> · <a class="ul" href="#top">Datenschutz</a> · <a class="ul" href="../../">Zurück zum Portfolio</a></span>
 </footer>
 
-<div class="ob" id="ob" role="status"><div id="obt">0 Tüten<small>0,00 €</small></div><a class="btn acc" id="obl" href="https://wa.me/4915100000000" rel="noopener">Per WhatsApp bestellen</a></div>
+<div class="ob" id="ob" role="status"><div id="obt">0 Tüten<small>0,00 €</small></div><a class="btn acc" id="obl" href="https://wa.me/4915158817217" rel="noopener">Per WhatsApp bestellen</a></div>
 
 <script>
 (function(){
@@ -489,7 +489,7 @@ function upd(){
   var ship=s>=35?0:4.9;
   $('#obt').innerHTML=n+(n===1?' Tüte':' Tüten')+'<small>'+fmt(s)+(n?' · Versand '+(ship?fmt(ship):'frei'):'')+'</small>';
   var msg='Hallo AURUM, ich möchte bestellen:\n'+lines.join('\n')+'\nSumme: '+fmt(s)+(ship?' zzgl. Versand':' (Versand frei)');
-  $('#obl').href='https://wa.me/4915100000000?text='+encodeURIComponent(msg);
+  $('#obl').href='https://wa.me/4915158817217?text='+encodeURIComponent(msg);
   [].forEach.call(rows.querySelectorAll('.rw'),function(r,i){r.querySelector('.qty').classList.toggle('has',qty[i]>0);r.querySelector('output').textContent=qty[i]})
 }
 rows.addEventListener('click',function(e){
