@@ -929,7 +929,11 @@ html[lang="ru"] .t-de { display: none !important; }
 /* Mobile: tap a preview to open it full screen and scroll it live */
 .mitem .frame{position:relative;cursor:pointer}
 .mitem .frame .tap{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);z-index:3;padding:9px 16px;border-radius:999px;background:rgba(10,10,12,.82);color:#fff;font-size:13px;font-weight:600;letter-spacing:.02em;pointer-events:none;white-space:nowrap}
-.mitem .shots iframe{pointer-events:none!important}
+.mitem .shots iframe{pointer-events:none}
+.mitem .frame.live .shots iframe{pointer-events:auto}
+.mitem .frame.live .tap{display:none}
+.mitem .frame .x{display:none;position:absolute;top:6px;right:8px;z-index:4;padding:6px 12px;border-radius:999px;border:0;background:rgba(10,10,12,.85);color:#fff;font-size:12px;font-weight:600}
+.mitem .frame.live .x{display:block}
 #ov{position:fixed;inset:0;z-index:9999;background:#000;display:none}
 #ov.on{display:block}
 #ov iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#fff}
@@ -1520,10 +1524,17 @@ onScroll();
   document.querySelectorAll('.mitem').forEach(function(m,i){
     var fr=m.querySelector('.frame'); if(!fr) return;
     var t=document.createElement('div'); t.className='tap';
-    t.innerHTML='<span class="t-de">Antippen und live ausprobieren</span><span class="t-ru">Нажми и листай сайт</span>';
+    t.innerHTML='<span class="t-de">Antippen: Seite live bedienen</span><span class="t-ru">Нажми: сайт оживёт</span>';
     fr.appendChild(t);
+    var x=document.createElement('button'); x.type='button'; x.className='x';
+    x.innerHTML='<span class="t-de">Fertig</span><span class="t-ru">Готово</span>';
+    fr.appendChild(x);
+    x.addEventListener('click',function(e){ e.stopPropagation(); fr.classList.remove('live'); });
     fr.addEventListener('click',function(){
-      ifr.src=S[i].live_u; ov.classList.add('on'); document.documentElement.style.overflow='hidden';
+      if(fr.classList.contains('live')) return;
+      document.querySelectorAll('.mitem .frame.live').forEach(function(o){ o.classList.remove('live'); });
+      var f=fr.querySelector('iframe'); if(f && !f.src) f.src=f.dataset.src;
+      fr.classList.add('live');
     });
   });
 })();
