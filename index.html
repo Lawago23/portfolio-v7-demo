@@ -1364,6 +1364,9 @@ var S = [
     u: "", live_u: "sites/aurum/", bg: "#1b110c", ink: "#f1e4d0"
   }
 ];
+S.forEach(function(s, i){ s.p = 'img/shots/s' + (i + 1) + '.jpg'; });
+S = [0, 5, 7, 4, 9, 8, 3, 1, 6, 2].map(function(k){ return S[k]; });
+
 
 var currentLang = 'de';
 var rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1403,7 +1406,7 @@ function renderSlides() {
       '<p><b>' + tag + '.</b> ' + desc + '</p>' +
       '<div class="frame">' +
         '<div class="bar"><i></i><i></i><i></i><u translate="no">' + s.n + '</u></div>' +
-        '<div class="shots" style="background:url(img/shots/s' + (i + 1) + '.jpg) top left/cover no-repeat"><iframe title="' + s.n + '" data-src="' + (s.live_u || s.u) + '" loading="lazy" tabindex="-1" class="on" style="width:1440px;height:900px"></iframe></div>' +
+        '<div class="shots" style="background:url(' + s.p + ') top left/cover no-repeat"><iframe title="' + s.n + '" data-src="' + (s.live_u || s.u) + '" loading="lazy" tabindex="-1" class="on" style="width:1440px;height:900px"></iframe></div>' +
       '</div>' +
       '<a href="' + s.live_u + '" target="_blank" rel="noopener">' + btnText + '</a>' +
     '</div>';
@@ -1434,7 +1437,7 @@ function set(i) {
   if (i === cur) return;
   cur = i;
   var s = S[i];
-  shots.style.background = 'url(img/shots/s' + (i + 1) + '.jpg) top left/cover no-repeat';
+  shots.style.background = 'url(' + S[i].p + ') top left/cover no-repeat';
   ifr.forEach(function(f, j){
     if (Math.abs(j - i) <= 1 && !f.src) f.src = f.dataset.src;
     f.classList.toggle('on', j === i);
