@@ -983,6 +983,12 @@ html[lang="de"] .hero h1 .t-ru,html[lang="ru"] .hero h1 .t-de{display:none!impor
 .hero-main .row{order:5}
 .hero-facts{order:6}
 }
+
+/* fogged glass backdrop */
+body{background:transparent!important}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:#021a26 url(img/glass.jpg) center/cover no-repeat;transform:translateZ(0)}
+.hero{background:linear-gradient(180deg,rgba(2,26,38,.35),rgba(2,26,38,.55))}
+.work{background:linear-gradient(180deg,rgba(4,40,58,.74),rgba(3,31,45,.82) 50%,rgba(2,26,38,.9))!important}
 </style>
 <style>
 /* Mobile: tap a preview to open it full screen and scroll it live */
