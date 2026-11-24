@@ -3,24 +3,24 @@
 <head>
 <meta charset="utf-8">
 <meta name="google" content="notranslate">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Websites für Gastro aus Mayen · Renat</title>
 <meta name="description" content="Zehn Seiten, zehn Gesichter: Websites für Imbiss, Pizzeria, Döner, Bäckerei, Café, Salon und Restaurant in Mayen. Ab 120 Euro, in vier Tagen online.">
 <meta property="og:title" content="Websites für Gastro aus Mayen · Renat">
 <meta property="og:image" content="img/pizza.jpg">
-<meta name="theme-color" content="#0d0d0f">
+<meta name="theme-color" content="#042a3b">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23ef5a24'/%3E%3Crect x='8' y='8' width='16' height='16' fill='%230d0d0f'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400..600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0d0d0f;
+  --bg: #042a3b;
   --fg: #f2efe8;
   --mut: #9a978f;
   --acc: #ef5a24;
   --acc-hover: #f7703e;
-  --stage: #0d0d0f;
+  --stage: #042a3b;
   --stage-ink: #f2efe8;
   --d: 'Bricolage Grotesque', system-ui, sans-serif;
   --t: 'Inter', system-ui, sans-serif;
@@ -31,15 +31,16 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html { background:#042a3b; touch-action: pan-y; overscroll-behavior-y: none; }
 body {
   background: var(--bg);
   color: var(--fg);
   font: 400 17px/1.55 var(--t);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  overflow-x: clip;
   width: 100%;
+  touch-action: pan-y;
 }
 
 a { color: inherit; }
@@ -57,9 +58,7 @@ html[lang="ru"] .t-de { display: none !important; }
   justify-content: space-between;
   align-items: center;
   padding: 16px var(--gut);
-  background: rgba(13, 13, 15, 0.88);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(4, 42, 59, 0.88);
   border-bottom: 1px solid rgba(242, 239, 232, 0.08);
   font: 500 15px var(--t);
 }
@@ -289,7 +288,7 @@ html[lang="ru"] .t-de { display: none !important; }
   font: 500 14px var(--t);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  background: rgba(13, 13, 15, 0.5);
+  background: rgba(4, 42, 59, 0.5);
 }
 
 .ticker div {
@@ -328,7 +327,7 @@ html[lang="ru"] .t-de { display: none !important; }
 .work {
   position: relative;
   height: calc(100svh * 10.8);
-  --g1: #1b263b; --g2: #2a2150; --g3: #5b1d58; --ang: 160deg;
+  --g1: #063a52; --g2: #053248; --g3: #042a3b; --ang: 180deg;
   background: linear-gradient(var(--ang), var(--g1) 0%, var(--g2) 48%, var(--g3) 100%);
   color: #f6f1f6;
 }
@@ -924,6 +923,15 @@ html[lang="ru"] .t-de { display: none !important; }
   .rv { opacity: 1; transform: none; }
   .frame { transform: none; }
 }
+
+/* scroll rail (v7.1) */
+.scroll-rail{position:fixed;right:12px;top:50%;transform:translateY(-50%);z-index:70;display:flex;flex-direction:column;align-items:center;gap:10px;pointer-events:none;font-family:var(--d)}
+.scroll-rail .sr-num{font-size:.8rem;font-weight:700;color:#fff;letter-spacing:.06em}
+.scroll-rail .sr-num small{color:rgba(255,255,255,.45);font-weight:500}
+.scroll-rail .sr-track{position:relative;width:3px;height:clamp(110px,24vh,200px);background:rgba(255,255,255,.16);border-radius:3px;overflow:hidden}
+.scroll-rail .sr-fill{position:absolute;inset:0;background:linear-gradient(180deg,#4cc9f0,#38e1c4);transform-origin:top;transform:scaleY(0)}
+.scroll-rail .sr-left{font-size:.68rem;color:rgba(255,255,255,.55)}
+@media(max-width:600px){.scroll-rail{right:5px}.scroll-rail .sr-left{display:none}.scroll-rail .sr-track{height:clamp(80px,18vh,140px)}}
 </style>
 <style>
 /* Mobile: tap a preview to open it full screen and scroll it live */
@@ -941,6 +949,7 @@ html[lang="ru"] .t-de { display: none !important; }
 </style>
 </head>
 <body>
+<div class="scroll-rail" aria-hidden="true"><div class="sr-num" id="srNum">01 <small>/ 06</small></div><div class="sr-track"><div class="sr-fill" id="srFill"></div></div><div class="sr-left" id="srLeft">100%</div></div>
 
 <!-- Global Navigation -->
 <header class="nav">
@@ -1464,20 +1473,7 @@ function palAt(x) {
   var a = PAL[i], b = PAL[i + 1];
   return 'rgb(' + [0,1,2].map(function(k){ return Math.round(a[k] + (b[k] - a[k]) * f); }).join(',') + ')';
 }
-var tgtP = 0, smP = 0, bgRaf = 0;
-function bgLoop(ts) {
-  smP += (tgtP - smP) * 0.035;
-  var drift = rm ? 0 : Math.sin(ts / 5200) * 0.03;
-  var x = smP * 0.72 + drift;
-  if (work) {
-    work.style.setProperty('--g1', palAt(x));
-    work.style.setProperty('--g2', palAt(x + 0.16));
-    work.style.setProperty('--g3', palAt(x + 0.34));
-    work.style.setProperty('--ang', (150 + smP * 70 + Math.sin(ts / 7000) * 8).toFixed(1) + 'deg');
-  }
-  bgRaf = requestAnimationFrame(bgLoop);
-}
-bgRaf = requestAnimationFrame(bgLoop);
+var tgtP = 0;
 function onScroll() {
   if (!work) return;
   var r = work.getBoundingClientRect(),
@@ -1620,5 +1616,6 @@ try {
   });
 })();
 </script>
+<script src="scroll.js"></script>
 </body>
 </html>
