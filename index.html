@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="google" content="notranslate">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>Renat / Portfolio · Websites für Gastro aus Mayen</title>
-<meta name="description" content="Zehn Seiten, zehn Gesichter: Websites für Imbiss, Pizzeria, Döner, Bäckerei, Café, Salon und Restaurant in Mayen. Ab 120 Euro, in vier Tagen online.">
-<meta property="og:title" content="Websites für Gastro aus Mayen · Renat">
+<title>Renat / Portfolio · Websites für Gastronomie</title>
+<meta name="description" content="Zehn Websites, zehn Handschriften: Seiten und digitale Speisekarten für Imbiss, Pizzeria, Döner, Bäckerei, Café, Salon und Restaurant.">
+<meta property="og:title" content="Renat / Portfolio · Websites für Gastronomie">
 <meta property="og:image" content="img/pizza.jpg">
 <meta name="theme-color" content="#021a26">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23ef5a24'/%3E%3Crect x='8' y='8' width='16' height='16' fill='%230d0d0f'/%3E%3C/svg%3E">
@@ -949,6 +949,28 @@ html[lang="ru"] .t-de { display: none !important; }
 .hero-index .nm{font:600 clamp(16px,1.7vw,21px) var(--d);letter-spacing:-.01em}
 @media(max-width:900px){.hero-grid{grid-template-columns:1fr}.hero{padding-top:100px}}
 @media(min-width:901px){.work .pin{padding-right:calc(var(--gut) + 38px)}}
+
+.hero h1 .h1-line.t-de,.hero h1 .h1-line.t-ru{display:block}
+html[lang="de"] .hero h1 .t-ru,html[lang="ru"] .hero h1 .t-de{display:none!important}
+.hero h1{font-size:clamp(48px,7.4vw,116px)}
+.hero-facts{list-style:none;display:flex;gap:clamp(18px,3vw,40px);margin-top:40px;padding-top:22px;border-top:1px solid rgba(242,239,232,.14);flex-wrap:wrap}
+.hero-facts li{display:flex;flex-direction:column;gap:2px;font-size:13px;color:var(--mut)}
+.hero-facts b{font:700 22px var(--d);color:var(--fg);letter-spacing:-.01em}
+.hs-frame{border-radius:16px;overflow:hidden;background:#0a1117;box-shadow:0 40px 90px -30px rgba(0,0,0,.8),0 0 0 1px rgba(242,239,232,.1);transform:perspective(1400px) rotateY(-6deg) rotateX(2deg)}
+.hs-bar{display:flex;align-items:center;gap:7px;padding:11px 14px;background:#12181f}
+.hs-bar i{width:10px;height:10px;border-radius:50%;background:#2b343d}
+.hs-bar u{margin-left:12px;flex:1;text-decoration:none;font:500 12px var(--t);color:var(--mut);background:#0a1117;border-radius:6px;padding:5px 12px}
+.hs-imgs{position:relative;aspect-ratio:16/10;background:#0a1117}
+.hs-imgs img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;opacity:0;transform:scale(1.03);transition:opacity .7s,transform 1.2s cubic-bezier(.2,.8,.1,1)}
+.hs-imgs img.on{opacity:1;transform:none}
+.hs-cap{display:flex;align-items:baseline;gap:14px;margin-top:22px}
+.hs-cap span{font:600 13px var(--d);letter-spacing:.12em;color:#4cc9f0}
+.hs-cap b{font:600 clamp(18px,1.8vw,24px) var(--d);letter-spacing:-.01em}
+.hs-ticks{display:flex;gap:8px;margin-top:14px}
+.hs-ticks button{flex:1;height:22px;background:none;border:0;cursor:pointer;position:relative;padding:0}
+.hs-ticks button::after{content:"";position:absolute;left:0;right:0;top:10px;height:3px;border-radius:3px;background:rgba(242,239,232,.2);transition:background .3s}
+.hs-ticks button.on::after{background:#4cc9f0}
+@media(max-width:900px){.hs-frame{transform:none}}
 </style>
 <style>
 /* Mobile: tap a preview to open it full screen and scroll it live */
@@ -1001,23 +1023,31 @@ html[lang="ru"] .t-de { display: none !important; }
 <section class="hero" id="top">
   <div class="hero-grid">
     <div class="hero-main">
-      <div class="hero-kicker"><span class="t-de">Portfolio &middot; Mayen</span><span class="t-ru">Портфолио &middot; Майен</span></div>
-      <h1 id="h1" aria-label="Renat / Portfolio">
-        <span class="h1-line">Renat</span>
-        <span class="h1-line h1-sub">/ Portfolio</span>
+      <div class="hero-kicker"><span class="t-de">Websites für Gastronomie</span><span class="t-ru">Сайты для гастрономии</span></div>
+      <h1 id="h1" aria-label="Websites, die Hunger machen.">
+        <span class="h1-line t-de">Websites, die</span><span class="h1-line h1-sub t-de">Hunger machen.</span>
+        <span class="h1-line t-ru">Сайты, от которых</span><span class="h1-line h1-sub t-ru">хочется заказать.</span>
       </h1>
       <p class="lead">
-        <span class="t-de">Zehn Websites für Imbiss, Pizzeria, Döner und Bäckerei. Jede sieht aus wie ihr Haus, nicht wie eine Vorlage. Ab 120 Euro, in vier Tagen online.</span>
-        <span class="t-ru">Десять сайтов для пиццерий, донеров, закусочных и пекарен. Каждый выглядит как само заведение, а не как шаблон. От 120 евро, запуск за четыре дня.</span>
+        <span class="t-de">Eigene Seiten und digitale Speisekarten, die aussehen wie Ihr Haus. Von Hand gestaltet, auf dem Handy zuerst gedacht, in wenigen Tagen online.</span>
+        <span class="t-ru">Свои сайты и цифровые меню, которые выглядят как само заведение. Сделаны вручную, в первую очередь под телефон, запуск за несколько дней.</span>
       </p>
       <div class="row">
         <a class="btn acc" href="#arbeiten"><span class="t-de">Arbeiten ansehen</span><span class="t-ru">Смотреть работы</span>
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
         <a class="btn o" href="#kontakt"><span class="t-de">Anfragen</span><span class="t-ru">Обсудить</span></a>
       </div>
-      <p class="hero-note"><span class="t-de">Ehrlich: Ein Kundenprojekt läuft (Place of Döner, Mayen). Die übrigen Seiten sind eigene Demos mit erfundenen Daten.</span><span class="t-ru">Честно: один кейс клиента работает (Place of Döner, Майен). Остальные сайты это наши демо с вымышленными данными.</span></p>
+      <ul class="hero-facts">
+        <li><b>10</b><span class="t-de">Stile</span><span class="t-ru">стилей</span></li>
+        <li><b>DE &middot; RU</b><span class="t-de">zweisprachig</span><span class="t-ru">два языка</span></li>
+        <li><b>QR</b><span class="t-de">Karte am Tisch</span><span class="t-ru">меню на столе</span></li>
+      </ul>
     </div>
-    <ol class="hero-index" id="heroIndex" aria-label="10 Websites"></ol>
+    <div class="hero-show" id="heroShow">
+      <div class="hs-frame"><div class="hs-bar"><i></i><i></i><i></i><u id="hsUrl"></u></div><div class="hs-imgs" id="hsImgs"></div></div>
+      <div class="hs-cap"><span id="hsNo">01</span><b id="hsName"></b></div>
+      <div class="hs-ticks" id="hsTicks" role="tablist" aria-label="10 Websites"></div>
+    </div>
   </div>
   <div class="ticker" aria-hidden="true"><div id="tk"></div></div>
 </section>
@@ -1051,8 +1081,8 @@ html[lang="ru"] .t-de { display: none !important; }
     </h2>
 
     <p class="why-lead rv">
-      <span class="t-de">Drei konkrete Gründe für Gastronomen und Cafés in Mayen, die ab der ersten Woche Gäste bringen und Kosten sparen.</span>
-      <span class="t-ru">Три точные причины для кафе и гастрономии в Майене, которые приводят гостей и экономят деньги с первого дня.</span>
+      <span class="t-de">Drei konkrete Gründe für Gastronomen und Cafés, die ab der ersten Woche Gäste bringen und Kosten sparen.</span>
+      <span class="t-ru">Три точные причины для кафе и гастрономии, которые приводят гостей и экономят деньги с первого дня.</span>
     </p>
 
     <div class="why-grid">
@@ -1087,8 +1117,8 @@ html[lang="ru"] .t-de { display: none !important; }
           <span class="t-ru">Ссылка в профиле Google Maps</span>
         </h3>
         <p>
-          <span class="t-de">Wer in Mayen nach Pizza, Döner oder Café sucht, klickt auf Google Maps zuerst auf die Speisekarte. Mit eigener Website bleiben Besucher direkt bei Ihnen, statt zur Konkurrenz zu wechseln.</span>
-          <span class="t-ru">Когда в Майене ищут заведение, в Google Maps первым делом открывают сайт или меню. Своя страница удерживает клиента у вас, не давая уйти к соседнему кафе.</span>
+          <span class="t-de">Wer nach Pizza, Döner oder Café sucht, klickt auf Google Maps zuerst auf die Speisekarte. Mit eigener Website bleiben Besucher direkt bei Ihnen, statt zur Konkurrenz zu wechseln.</span>
+          <span class="t-ru">Когда ищут заведение, в Google Maps первым делом открывают сайт или меню. Своя страница удерживает клиента у вас, не давая уйти к соседнему кафе.</span>
         </p>
       </div>
 
@@ -1272,12 +1302,12 @@ html[lang="ru"] .t-de { display: none !important; }
     </style>
 
     <p class="contact-disclaimer">
-      <span class="t-de">Ihre Angaben werden nur zur Beantwortung der Anfrage verwendet · Standort: Mayen</span>
-      <span class="t-ru">Данные используются только для ответа на заявку · Локация: Майен</span>
+      <span class="t-de">Ihre Angaben werden nur zur Beantwortung der Anfrage verwendet</span>
+      <span class="t-ru">Данные используются только для ответа на заявку</span>
     </p>
 
     <div class="foot">
-      <span>Mayen &bull; <span class="t-de">Beispieldaten in den Demos, Fotos gemeinfrei</span><span class="t-ru">Демо-данные, фотографии без роялти</span></span>
+      <span><span class="t-de">Beispieldaten in den Demos, Fotos gemeinfrei</span><span class="t-ru">Демо-данные, фотографии без роялти</span></span>
       <span>Renat &bull; <span class="t-de">Websites für Gastronomie</span><span class="t-ru">Сайты для гастрономии</span></span>
     </div>
   </div>
@@ -1359,12 +1389,12 @@ var S = [
     u: "", live_u: "sites/nami-menu/", bg: "#f1ebdd", ink: "#231a14"
   },
   {
-    n: "Studio Mayen",
+    n: "Studio Nova",
     t_de: "Der Terminbuch-Kalender",
     d_de: "Barbershop und Nagelstudio: Tagesleiste, Raster aus Uhrzeit und Meister:in, rechts der Bon mit Summe. Freie Zeiten sind anklickbar.",
     t_ru: "Календарь-ежедневник",
     d_ru: "Барбершоп и маникюр: лента дней, сетка время и мастер, справа чек с суммой. Свободные слоты кликабельны.",
-    u: "", live_u: "sites/studio-mayen/", bg: "#efe4de", ink: "#3a1830"
+    u: "", live_u: "sites/studio-nova/", bg: "#efe4de", ink: "#3a1830"
   },
   {
     n: "Studio Vela",
@@ -1391,15 +1421,17 @@ var currentLang = 'de';
 var rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // Ticker initialization
-var hi = document.getElementById('heroIndex');
-if (hi) hi.innerHTML = S.map(function(x, i){ return '<li><a href="#arbeiten" data-i="'+i+'"><span class="no">'+(i<9?'0':'')+(i+1)+'</span><span class="nm">'+x.n+'</span></a></li>'; }).join('');
-if (hi) hi.addEventListener('click', function(e){
-  var a = e.target.closest('a[data-i]'); if (!a) return; e.preventDefault();
-  var w = document.getElementById('arbeiten'), i = +a.dataset.i;
-  var y = w.getBoundingClientRect().top + scrollY + (i + 0.5) / S.length * (w.offsetHeight - innerHeight);
-  if (window.__scrollToY) window.__scrollToY(y); else scrollTo({top:y,behavior:'smooth'});
-});
-var tk = ['Pizzeria', 'Döner', 'Imbiss', 'Bäckerei', 'Café', 'Mayen'];
+var hsImgs=document.getElementById('hsImgs'),hsTicks=document.getElementById('hsTicks'),hsNo=document.getElementById('hsNo'),hsName=document.getElementById('hsName'),hsUrl=document.getElementById('hsUrl'),hsI=0,hsT=0;
+if(hsImgs){
+  hsImgs.innerHTML=S.map(function(x,i){return '<img src="'+x.p+'" alt="'+x.n+'" loading="'+(i?'lazy':'eager')+'" class="'+(i?'':'on')+'">';}).join('');
+  hsTicks.innerHTML=S.map(function(x,i){return '<button type="button" aria-label="'+x.n+'" class="'+(i?'':'on')+'"></button>';}).join('');
+  var hsSet=function(i){hsI=(i+S.length)%S.length;[].forEach.call(hsImgs.children,function(e,k){e.classList.toggle('on',k===hsI);});[].forEach.call(hsTicks.children,function(e,k){e.classList.toggle('on',k===hsI);});hsNo.textContent=(hsI<9?'0':'')+(hsI+1);hsName.textContent=S[hsI].n;hsUrl.textContent=S[hsI].n.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')+'.demo';};
+  hsSet(0);
+  var hsRun=function(){clearInterval(hsT);if(!rm)hsT=setInterval(function(){hsSet(hsI+1);},3200);};
+  hsTicks.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;hsSet([].indexOf.call(hsTicks.children,b));hsRun();});
+  hsRun();
+}
+var tk = ['Pizzeria', 'Döner', 'Imbiss', 'Bäckerei', 'Café', 'Salon'];
 var t = tk.map(function(x){ return '<span>' + x + '</span><span>/</span>'; }).join('');
 document.getElementById('tk').innerHTML = t + t + t + t;
 
