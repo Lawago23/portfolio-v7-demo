@@ -971,6 +971,18 @@ html[lang="de"] .hero h1 .t-ru,html[lang="ru"] .hero h1 .t-de{display:none!impor
 .hs-ticks button::after{content:"";position:absolute;left:0;right:0;top:10px;height:3px;border-radius:3px;background:rgba(242,239,232,.2);transition:background .3s}
 .hs-ticks button.on::after{background:#4cc9f0}
 @media(max-width:900px){.hs-frame{transform:none}}
+
+@media(max-width:900px){
+.hero-grid{display:flex;flex-direction:column;gap:0;align-items:stretch}
+.hero-grid>*,.hero-main>*{width:100%;max-width:none}
+.hero-main{display:contents}
+.hero-kicker{order:1;margin-bottom:14px}
+.hero h1{order:2;margin-bottom:28px}
+.hero-show{order:3}
+.hero-main .lead{order:4;margin-top:30px}
+.hero-main .row{order:5}
+.hero-facts{order:6}
+}
 </style>
 <style>
 /* Mobile: tap a preview to open it full screen and scroll it live */
