@@ -1049,7 +1049,6 @@ html[lang="de"] .hero h1 .t-ru,html[lang="ru"] .hero h1 .t-de{display:none!impor
       <div class="hs-ticks" id="hsTicks" role="tablist" aria-label="10 Websites"></div>
     </div>
   </div>
-  <div class="ticker" aria-hidden="true"><div id="tk"></div></div>
 </section>
 
 <!-- ==================== WORK STAGE ==================== -->
@@ -1427,13 +1426,11 @@ if(hsImgs){
   hsTicks.innerHTML=S.map(function(x,i){return '<button type="button" aria-label="'+x.n+'" class="'+(i?'':'on')+'"></button>';}).join('');
   var hsSet=function(i){hsI=(i+S.length)%S.length;[].forEach.call(hsImgs.children,function(e,k){e.classList.toggle('on',k===hsI);});[].forEach.call(hsTicks.children,function(e,k){e.classList.toggle('on',k===hsI);});hsNo.textContent=(hsI<9?'0':'')+(hsI+1);hsName.textContent=S[hsI].n;hsUrl.textContent=S[hsI].n.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')+'.demo';};
   hsSet(0);
-  var hsRun=function(){clearInterval(hsT);if(!rm)hsT=setInterval(function(){hsSet(hsI+1);},3200);};
+  var hsBag=[],hsNext=function(){if(!hsBag.length){for(var k=0;k<S.length;k++)if(k!==hsI)hsBag.push(k);for(var j=hsBag.length-1;j>0;j--){var r=Math.floor(Math.random()*(j+1)),t=hsBag[j];hsBag[j]=hsBag[r];hsBag[r]=t;}}return hsBag.pop();};
+  var hsRun=function(){clearInterval(hsT);if(!rm)hsT=setInterval(function(){hsSet(hsNext());},3200);};
   hsTicks.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;hsSet([].indexOf.call(hsTicks.children,b));hsRun();});
   hsRun();
 }
-var tk = ['Pizzeria', 'Döner', 'Imbiss', 'Bäckerei', 'Café', 'Salon'];
-var t = tk.map(function(x){ return '<span>' + x + '</span><span>/</span>'; }).join('');
-document.getElementById('tk').innerHTML = t + t + t + t;
 
 // Build interactive stage
 var meta = document.getElementById('meta'),
