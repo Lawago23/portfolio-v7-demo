@@ -986,9 +986,17 @@ html[lang="de"] .hero h1 .t-ru,html[lang="ru"] .hero h1 .t-de{display:none!impor
 
 /* fogged glass backdrop */
 body{background:transparent!important}
-body::before{content:"";position:fixed;inset:0;z-index:-1;background:#021a26 url(img/glass.jpg) center/cover no-repeat;transform:translateZ(0)}
+body::before{content:"";position:fixed;top:0;left:0;width:100%;height:100vh;height:max(100vh,100lvh);z-index:-1;background:#021a26 url(img/glass.jpg) center/cover no-repeat;transform:translateZ(0)}
 .hero{background:linear-gradient(180deg,rgba(2,26,38,.35),rgba(2,26,38,.55))}
 .work{background:linear-gradient(180deg,rgba(4,40,58,.74),rgba(3,31,45,.82) 50%,rgba(2,26,38,.9))!important}
+
+/* running drops (compositor-only animation) */
+.rain{position:fixed;top:0;left:0;width:100%;height:100vh;height:max(100vh,100lvh);z-index:-1;pointer-events:none;overflow:hidden;contain:strict}
+.rd{position:absolute;top:0;left:var(--x);width:var(--w);will-change:transform;transform:translate3d(0,-40vh,0);animation:rdrun var(--t) var(--dl) infinite cubic-bezier(.45,.05,.55,.95)}
+.rd::before{content:"";position:absolute;left:25%;right:25%;bottom:50%;height:var(--l);border-radius:99px;background:linear-gradient(to top,rgba(150,215,240,.26),rgba(150,215,240,0))}
+.rd::after{content:"";position:absolute;left:0;top:0;width:var(--w);height:calc(var(--w)*1.3);border-radius:50% 50% 50% 50%/45% 45% 55% 55%;background:radial-gradient(ellipse at 32% 26%,rgba(255,255,255,.8) 0 7%,rgba(255,255,255,0) 22%),radial-gradient(ellipse at 50% 55%,rgba(60,150,190,.55),rgba(3,25,38,.85) 70%);box-shadow:0 0 0 1px rgba(170,225,245,.3) inset,0 5px 8px rgba(0,8,14,.35)}
+@keyframes rdrun{0%{transform:translate3d(0,-40vh,0)}18%{transform:translate3d(0,-8vh,0)}24%{transform:translate3d(0,-6vh,0)}46%{transform:translate3d(0,32vh,0)}52%{transform:translate3d(0,34vh,0)}78%{transform:translate3d(0,78vh,0)}84%{transform:translate3d(0,80vh,0)}100%{transform:translate3d(0,125vh,0)}}
+@media(prefers-reduced-motion:reduce){.rain{display:none}}
 </style>
 <style>
 /* Mobile: tap a preview to open it full screen and scroll it live */
@@ -1006,6 +1014,7 @@ body::before{content:"";position:fixed;inset:0;z-index:-1;background:#021a26 url
 </style>
 </head>
 <body>
+<div class="rain" id="rain" aria-hidden="true"></div>
 <div class="scroll-rail" aria-hidden="true"><div class="sr-num" id="srNum">01 <small>/ 10</small></div><div class="sr-track"><div class="sr-fill" id="srFill"></div></div><div class="sr-left" id="srLeft">100%</div></div>
 
 <!-- Global Navigation -->
@@ -1672,6 +1681,7 @@ try {
   });
 })();
 </script>
+<script>(function(){var r=document.getElementById('rain');if(!r)return;var n=innerWidth<700?7:12,h='';for(var i=0;i<n;i++){var w=7+Math.random()*10;h+='<i class="rd" style="--x:'+(3+Math.random()*92).toFixed(1)+'%;--w:'+w.toFixed(1)+'px;--l:'+(110+Math.random()*260).toFixed(0)+'px;--t:'+(14+Math.random()*16).toFixed(1)+'s;--dl:-'+(Math.random()*26).toFixed(1)+'s"></i>';}r.innerHTML=h;})();</script>
 <script src="scroll.js"></script>
 </body>
 </html>
