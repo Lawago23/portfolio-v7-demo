@@ -4,23 +4,23 @@
 <meta charset="utf-8">
 <meta name="google" content="notranslate">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>Websites für Gastro aus Mayen · Renat</title>
+<title>Renat / Portfolio · Websites für Gastro aus Mayen</title>
 <meta name="description" content="Zehn Seiten, zehn Gesichter: Websites für Imbiss, Pizzeria, Döner, Bäckerei, Café, Salon und Restaurant in Mayen. Ab 120 Euro, in vier Tagen online.">
 <meta property="og:title" content="Websites für Gastro aus Mayen · Renat">
 <meta property="og:image" content="img/pizza.jpg">
-<meta name="theme-color" content="#042a3b">
+<meta name="theme-color" content="#021a26">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23ef5a24'/%3E%3Crect x='8' y='8' width='16' height='16' fill='%230d0d0f'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400..600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #042a3b;
+  --bg: #021a26;
   --fg: #f2efe8;
   --mut: #9a978f;
   --acc: #ef5a24;
   --acc-hover: #f7703e;
-  --stage: #042a3b;
+  --stage: #021a26;
   --stage-ink: #f2efe8;
   --d: 'Bricolage Grotesque', system-ui, sans-serif;
   --t: 'Inter', system-ui, sans-serif;
@@ -31,7 +31,7 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { background:#042a3b; touch-action: pan-y; overscroll-behavior-y: none; }
+html { background:#021a26; touch-action: pan-y; overscroll-behavior-y: none; }
 body {
   background: var(--bg);
   color: var(--fg);
@@ -58,7 +58,7 @@ html[lang="ru"] .t-de { display: none !important; }
   justify-content: space-between;
   align-items: center;
   padding: 16px var(--gut);
-  background: rgba(4, 42, 59, 0.88);
+  background: rgba(2, 26, 38, 0.88);
   border-bottom: 1px solid rgba(242, 239, 232, 0.08);
   font: 500 15px var(--t);
 }
@@ -288,7 +288,7 @@ html[lang="ru"] .t-de { display: none !important; }
   font: 500 14px var(--t);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  background: rgba(4, 42, 59, 0.5);
+  background: rgba(2, 26, 38, 0.5);
 }
 
 .ticker div {
@@ -327,7 +327,7 @@ html[lang="ru"] .t-de { display: none !important; }
 .work {
   position: relative;
   height: calc(100svh * 10.8);
-  --g1: #063a52; --g2: #053248; --g3: #042a3b; --ang: 180deg;
+  --g1: #04283a; --g2: #031f2d; --g3: #021a26; --ang: 180deg;
   background: linear-gradient(var(--ang), var(--g1) 0%, var(--g2) 48%, var(--g3) 100%);
   color: #f6f1f6;
 }
@@ -932,6 +932,23 @@ html[lang="ru"] .t-de { display: none !important; }
 .scroll-rail .sr-fill{position:absolute;inset:0;background:linear-gradient(180deg,#4cc9f0,#38e1c4);transform-origin:top;transform:scaleY(0)}
 .scroll-rail .sr-left{font-size:.68rem;color:rgba(255,255,255,.55)}
 @media(max-width:600px){.scroll-rail{right:5px}.scroll-rail .sr-left{display:none}.scroll-rail .sr-track{height:clamp(80px,18vh,140px)}}
+
+/* hero v2 */
+.hero{padding:120px var(--gut) 90px}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(32px,6vw,96px);align-items:center;max-width:1400px;width:100%;margin:0 auto}
+.hero-kicker{font:600 13px var(--t);letter-spacing:.18em;text-transform:uppercase;color:#4cc9f0;margin-bottom:22px}
+.hero h1{max-width:none;font:700 clamp(54px,9vw,140px)/.95 var(--d);letter-spacing:-.045em}
+.hero h1 .h1-line{display:block}
+.hero h1 .h1-sub{color:rgba(242,239,232,.42)}
+.hero-note{margin-top:26px;max-width:52ch;font-size:14px;color:var(--mut);opacity:.8}
+.hero-index{list-style:none;border-top:1px solid rgba(242,239,232,.14)}
+.hero-index li{border-bottom:1px solid rgba(242,239,232,.14)}
+.hero-index a{display:flex;align-items:baseline;gap:18px;padding:13px 4px;text-decoration:none;transition:padding .25s,color .25s}
+.hero-index a:hover{padding-left:14px;color:#4cc9f0}
+.hero-index .no{font:600 13px var(--d);letter-spacing:.1em;color:rgba(242,239,232,.45);min-width:26px}
+.hero-index .nm{font:600 clamp(16px,1.7vw,21px) var(--d);letter-spacing:-.01em}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr}.hero{padding-top:100px}}
+@media(min-width:901px){.work .pin{padding-right:calc(var(--gut) + 38px)}}
 </style>
 <style>
 /* Mobile: tap a preview to open it full screen and scroll it live */
@@ -949,13 +966,13 @@ html[lang="ru"] .t-de { display: none !important; }
 </style>
 </head>
 <body>
-<div class="scroll-rail" aria-hidden="true"><div class="sr-num" id="srNum">01 <small>/ 06</small></div><div class="sr-track"><div class="sr-fill" id="srFill"></div></div><div class="sr-left" id="srLeft">100%</div></div>
+<div class="scroll-rail" aria-hidden="true"><div class="sr-num" id="srNum">01 <small>/ 10</small></div><div class="sr-track"><div class="sr-fill" id="srFill"></div></div><div class="sr-left" id="srLeft">100%</div></div>
 
 <!-- Global Navigation -->
 <header class="nav">
   <a href="#top" class="brand" aria-label="Startseite">
     <span class="brand-dot" aria-hidden="true"></span>
-    <span>Renat / Webseiten</span>
+    <span>Renat / Portfolio</span>
   </a>
 
   <div class="nav-right">
@@ -982,38 +999,27 @@ html[lang="ru"] .t-de { display: none !important; }
 
 <!-- ==================== HERO ==================== -->
 <section class="hero" id="top">
-  <div class="orb" aria-hidden="true"></div>
-
-  <h1 id="h1" aria-label="Zehn Seiten. Zehn Gesichter.">
-    <span class="t-de">Zehn Seiten. Zehn Gesichter.</span>
-    <span class="t-ru">Десять сайтов. Десять характеров.</span>
-  </h1>
-
-  <p class="lead">
-    <span class="t-de">Websites für Imbiss, Pizzeria, Döner und Bäckerei in Mayen. Jede Seite sieht aus wie ihr Haus, nicht wie eine Vorlage. Ab 120 Euro, in vier Tagen online.</span>
-    <span class="t-ru">Сайты для пиццерий, донеров, закусочных и пекарен в Майене. Каждый сайт выглядит как само заведение, а не как шаблон. От 120 евро, запуск за четыре дня.</span>
-  </p>
-
-  <p class="lead" style="margin-top:14px;opacity:.78">
-    <span class="t-de">Ehrlich gesagt: Ein Kundenprojekt läuft bereits (Place of Döner in Mayen). Die übrigen Seiten sind eigene Demos mit erfundenen Daten. Wir sammeln weitere echte Referenzen.</span>
-    <span class="t-ru">Честно: один кейс клиента уже работает (Place of Döner в Mayen). Остальные сайты это наши демо с вымышленными данными. Нам нужно набрать больше рабочих кейсов.</span>
-  </p>
-
-  <div class="row">
-    <a class="btn acc" href="#arbeiten">
-      <span class="t-de">Die 10 Seiten ansehen</span>
-      <span class="t-ru">Посмотреть 10 работ</span>
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-    </a>
-    <a class="btn o" href="#warum">
-      <span class="t-de">Warum eine eigene Seite?</span>
-      <span class="t-ru">Зачем сайту заведение?</span>
-    </a>
+  <div class="hero-grid">
+    <div class="hero-main">
+      <div class="hero-kicker"><span class="t-de">Portfolio &middot; Mayen</span><span class="t-ru">Портфолио &middot; Майен</span></div>
+      <h1 id="h1" aria-label="Renat / Portfolio">
+        <span class="h1-line">Renat</span>
+        <span class="h1-line h1-sub">/ Portfolio</span>
+      </h1>
+      <p class="lead">
+        <span class="t-de">Zehn Websites für Imbiss, Pizzeria, Döner und Bäckerei. Jede sieht aus wie ihr Haus, nicht wie eine Vorlage. Ab 120 Euro, in vier Tagen online.</span>
+        <span class="t-ru">Десять сайтов для пиццерий, донеров, закусочных и пекарен. Каждый выглядит как само заведение, а не как шаблон. От 120 евро, запуск за четыре дня.</span>
+      </p>
+      <div class="row">
+        <a class="btn acc" href="#arbeiten"><span class="t-de">Arbeiten ansehen</span><span class="t-ru">Смотреть работы</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+        <a class="btn o" href="#kontakt"><span class="t-de">Anfragen</span><span class="t-ru">Обсудить</span></a>
+      </div>
+      <p class="hero-note"><span class="t-de">Ehrlich: Ein Kundenprojekt läuft (Place of Döner, Mayen). Die übrigen Seiten sind eigene Demos mit erfundenen Daten.</span><span class="t-ru">Честно: один кейс клиента работает (Place of Döner, Майен). Остальные сайты это наши демо с вымышленными данными.</span></p>
+    </div>
+    <ol class="hero-index" id="heroIndex" aria-label="10 Websites"></ol>
   </div>
-
-  <div class="ticker" aria-hidden="true">
-    <div id="tk"></div>
-  </div>
+  <div class="ticker" aria-hidden="true"><div id="tk"></div></div>
 </section>
 
 <!-- ==================== WORK STAGE ==================== -->
@@ -1385,6 +1391,14 @@ var currentLang = 'de';
 var rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // Ticker initialization
+var hi = document.getElementById('heroIndex');
+if (hi) hi.innerHTML = S.map(function(x, i){ return '<li><a href="#arbeiten" data-i="'+i+'"><span class="no">'+(i<9?'0':'')+(i+1)+'</span><span class="nm">'+x.n+'</span></a></li>'; }).join('');
+if (hi) hi.addEventListener('click', function(e){
+  var a = e.target.closest('a[data-i]'); if (!a) return; e.preventDefault();
+  var w = document.getElementById('arbeiten'), i = +a.dataset.i;
+  var y = w.getBoundingClientRect().top + scrollY + (i + 0.5) / S.length * (w.offsetHeight - innerHeight);
+  if (window.__scrollToY) window.__scrollToY(y); else scrollTo({top:y,behavior:'smooth'});
+});
 var tk = ['Pizzeria', 'Döner', 'Imbiss', 'Bäckerei', 'Café', 'Mayen'];
 var t = tk.map(function(x){ return '<span>' + x + '</span><span>/</span>'; }).join('');
 document.getElementById('tk').innerHTML = t + t + t + t;

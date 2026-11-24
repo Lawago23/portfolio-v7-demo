@@ -42,6 +42,7 @@
     addEventListener('scroll', () => { if (!raf) { target = cur = scrollY; } }, { passive: true });
     addEventListener('keydown', () => setTimeout(() => { if (!raf) target = cur = scrollY; }, 0));
   }
+  window.__scrollToY = y => { y = clamp(y, 0, maxY()); if (smooth) { target = y; run(); } else scrollTo({ top: y, behavior: reduce ? 'auto' : 'smooth' }); };
   window.__scrollToEl = (el, center) => {
     const r = el.getBoundingClientRect();
     const y = clamp(scrollY + r.top - (center ? (innerHeight - r.height) / 2 : 0), 0, maxY());
@@ -70,10 +71,18 @@
     const m = maxY(), p = m ? clamp(scrollY / m, 0, 1) : 0;
     if (fill) fill.style.transform = `scaleY(${p})`;
     if (left) left.textContent = Math.round((1 - p) * 100) + '%';
-    if (num && secs.length) {
-      let idx = 0;
-      secs.forEach((s, i) => { if (s.getBoundingClientRect().top <= innerHeight * 0.4) idx = i; });
-      num.innerHTML = `${pad(idx + 1)} <small>/ ${pad(secs.length)}</small>`;
+    const wk = document.getElementById('arbeiten');
+    if (wk && num) {
+      const r = wk.getBoundingClientRect(), tot = wk.offsetHeight - innerHeight;
+      const inWork = r.top <= 0 && r.bottom >= innerHeight * 0.5;
+      const q = clamp(-r.top / (tot || 1), 0, 1);
+      if (inWork) {
+        const n = (window.__nSites || 10), i = Math.min(n - 1, Math.floor(q * n * 0.999));
+        num.innerHTML = `${pad(i + 1)} <small>/ ${pad(n)}</small>`;
+        if (fill) fill.style.transform = `scaleY(${q})`;
+        if (left) left.textContent = Math.round((1 - q) * 100) + '%';
+        num.style.visibility = 'visible';
+      } else num.style.visibility = 'hidden';
     }
     if (vp && track) {
       const r = vp.getBoundingClientRect(), total = vp.offsetHeight - innerHeight;
