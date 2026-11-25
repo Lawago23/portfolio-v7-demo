@@ -1,4 +1,4 @@
-<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin – Polsterhaus Muster (Demo)</title><link rel="stylesheet" href="style.css">
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin – Polsterhaus Muster (Demo)</title><link rel="stylesheet" href="style.css?v=4">
 <style>.ad{max-width:960px;margin:0 auto;padding:24px 20px}.pan{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;margin-bottom:20px}
 .pan h2{font-size:22px}.f{display:grid;gap:10px}.f label{font-size:13px;color:var(--mut);display:grid;gap:4px}.f input,.f select,.f textarea{padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;font:inherit}
 .row{display:grid;grid-template-columns:70px 1fr auto;gap:14px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}.row .th{width:70px;height:50px;border-radius:8px;overflow:hidden;background:#efe6d8;display:flex;align-items:center;justify-content:center}.row .th img,.row .th svg{width:100%;height:100%;object-fit:cover}
@@ -12,7 +12,7 @@
 <div class="pan"><h2>Startseite</h2><div class="f"><label>Überschrift<input id="h-t"></label><label>Text<textarea id="h-p" rows="2"></textarea></label><label>Titelbild wechseln<input type="file" id="h-f" accept="image/*"></label><button class="btn sm" id="h-s">Speichern</button> <button class="btn o sm" id="h-x">Bild entfernen</button></div></div>
 <div class="pan"><h2>Möbel</h2><div class="f" id="np"><label>Name<input id="n-n"></label><label>Kategorie<input id="n-k" list="kl" placeholder="z. B. Sofas"></label><datalist id="kl"></datalist><label>Preis (€)<input id="n-p" type="number"></label><label>Foto<input type="file" id="n-f" accept="image/*"></label><button class="btn sm" id="n-s">Möbel hinzufügen</button></div><div id="list" style="margin-top:14px"></div></div>
 <div class="pan"><button class="btn o sm" id="rs">Alles auf Ausgangszustand zurücksetzen</button><p class="sub" style="margin-top:10px">Demo: Änderungen werden in diesem Browser gespeichert. In der echten Version speichert der Server, und die Änderungen sind für alle Besucher sofort sichtbar.</p></div></div>
-<script src="store.js"></script><script>
+<script src="store.js?v=4"></script><script>
 let D=laden();const $=i=>document.getElementById(i);
 function msg(t){$('msg').textContent=t;setTimeout(()=>$('msg').textContent='',2500)}
 function resize(file,cb){const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const s=Math.min(1,900/im.width),c=document.createElement('canvas');c.width=im.width*s;c.height=im.height*s;c.getContext('2d').drawImage(im,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',.82))};im.src=r.result};r.readAsDataURL(file)}
