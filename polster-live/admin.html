@@ -23,7 +23,7 @@
 <div><div class="note" style="margin-bottom:6px"><b>Farben und Fotos</b>: je Farbe Name, Farbton und ein Foto dieser Farbe. Ohne Foto färbt die Seite das erste Foto automatisch um.</div><div id="fr"></div><button class="btn o sm" id="fadd">+ Farbe hinzufügen</button></div>
 <div style="display:flex;gap:10px"><button class="btn" id="e-s">Speichern</button><button class="btn o" id="e-x">Abbrechen</button></div></div></div></div>
 
-<div id="t-a" hidden><div class="pan"><h2>Aktion / Angebot (Balken oben auf der Seite)</h2><div class="f"><label><span><input type="checkbox" id="a-on" style="width:auto"> Aktion anzeigen</span></label><label>Text<input id="a-t"></label><button class="btn sm" id="a-s">Speichern</button></div></div>
+<div id="t-a" hidden><div class="pan"><h2>Aktion / Angebot (Balken oben auf der Seite)</h2><div class="f"><label><span><input type="checkbox" id="a-on" style="width:auto"> Aktion anzeigen</span></label><label>Text (leer = automatisch aus den reduzierten Möbeln)<input id="a-t"></label><button class="btn sm" id="a-s">Speichern</button></div></div>
 <div class="pan"><h2>Startseite</h2><div class="f"><label>Überschrift<input id="h-t"></label><label>Text<textarea id="h-p" rows="2"></textarea></label><label>Titelbild wechseln<input type="file" id="h-f" accept="image/*"></label><div style="display:flex;gap:10px"><button class="btn sm" id="h-s">Speichern</button><button class="btn o sm" id="h-x">Standardbild</button></div></div></div></div>
 
 <div id="t-o" hidden><div class="pan"><h2>Bestellungen</h2><div id="ol"></div></div></div>
@@ -68,5 +68,5 @@ $('h-f').onchange=async e=>{if(!e.target.files[0])return;msg('Foto wird hochgela
 $('ol').onchange=async e=>{const tr=e.target.dataset.tr;if(tr){const r=await SB.from('orders').update({tracking:e.target.value.trim()}).eq('id',tr);r.error?msg(r.error.message):msg('Sendungsnummer gespeichert ✓');return}const id=e.target.dataset.o;if(!id)return;const r=await SB.from('orders').update({status:+e.target.value}).eq('id',id);r.error?msg(r.error.message):msg('Status geändert ✓')};
 $('csv').onclick=()=>{const rows=[['Nr','Datum','Name','E-Mail','Artikel','Summe','Lieferung','Ort','Zahlung','Status']].concat(O.map(x=>[x.id,new Date(x.created_at).toLocaleString('de-DE'),x.name,x.email,x.items.map(i=>i.q+'x '+i.n).join('; '),x.total,x.lv,x.ort,x.zh,STEPS[x.status||0]]));const csv='\ufeff'+rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(';')).join('\n');const b=new Blob([csv],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='bestellungen.csv';a.click()};
 $('demo').onclick=async()=>{const r=await SB.auth.signInWithPassword({email:'demo@polsterhaus-muster.de',password:'RcsXm3Femn'});if(r.error){$('le').textContent='Demo-Zugang nicht verfügbar';return}boot()};
-boot();
+boot();if(new URLSearchParams(location.search).get('demo')==='1'){setTimeout(()=>{if(!$('app').hidden)return;$('demo').click()},800)}
 </script></body></html>

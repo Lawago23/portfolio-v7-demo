@@ -10,4 +10,4 @@ const CLIENT={
  widerruf:14,
  demo:true
 };
-const BUILD='2026-11-25 18:30';
+const BUILD='2026-11-25 19:00';
