@@ -1,4 +1,7 @@
 const SB=supabase.createClient('https://jthmekehipiolsxtjavb.supabase.co','sb_publishable__YUQh9Vgtda2nPwyxn-hTw_oMXZDe5-');
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const safeHex=h=>/^#[0-9a-fA-F]{6}$/.test(h||'')?h:'#888888';
+const safeUrl=u=>/^(https:\/\/[a-z0-9.-]+\.supabase\.co\/|img\/|models\/|data:image\/(jpeg|png|webp);base64,)/i.test(u||'')?u:'';
 const FILIALEN=(typeof CLIENT!=='undefined'&&CLIENT.filialen)||['Filiale 1'];
 const STEPS=['Bestellung eingegangen','Wird vorbereitet','Versandt','In Zustellung','Zugestellt'];
 function jl(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}}
@@ -18,9 +21,9 @@ function svg(p){const c=p.farbe||'#8a7f72',d=shade(c,-35),l=shade(c,28);const f=
  else if(f==='sessel')s=`<rect x="92" y="38" width="116" height="92" rx="34" fill="${c}"/><rect x="72" y="80" width="30" height="62" rx="12" fill="${d}"/><rect x="198" y="80" width="30" height="62" rx="12" fill="${d}"/><rect x="100" y="104" width="100" height="34" rx="10" fill="${l}"/><rect x="102" y="146" width="7" height="16" fill="#3a2f28"/><rect x="191" y="146" width="7" height="16" fill="#3a2f28"/>`;
  else if(f==='bett')s=`<rect x="44" y="40" width="212" height="60" rx="12" fill="${d}"/><rect x="40" y="96" width="220" height="46" rx="8" fill="${c}"/><rect x="54" y="84" width="92" height="26" rx="10" fill="${l}"/><rect x="154" y="84" width="92" height="26" rx="10" fill="${l}"/><rect x="40" y="142" width="10" height="16" fill="#3a2f28"/><rect x="250" y="142" width="10" height="16" fill="#3a2f28"/>`;
  else s=`<ellipse cx="150" cy="92" rx="62" ry="30" fill="${c}"/><rect x="88" y="92" width="124" height="38" rx="10" fill="${c}"/><ellipse cx="150" cy="92" rx="62" ry="26" fill="${l}"/><rect x="104" y="128" width="7" height="22" fill="#3a2f28"/><rect x="190" y="128" width="7" height="22" fill="#3a2f28"/>`;
- return `<svg viewBox="0 0 300 180" role="img" aria-label="${p.name}"><ellipse cx="150" cy="166" rx="120" ry="7" fill="rgba(0,0,0,.12)"/>${s}</svg>`}
+ return `<svg viewBox="0 0 300 180" role="img" aria-label="${esc(p.name)}"><ellipse cx="150" cy="166" rx="120" ry="7" fill="rgba(0,0,0,.12)"/>${s}</svg>`}
 function fImg(p,ci){const f=(p.farben||[])[ci||0];if(f&&f.bild)return f.bild;if(p.bild)return p.bild;return ''}
-function bildHTML(p,ci){const u=fImg(p,ci);if(u)return `<img src="${u}" alt="${p.name}" loading="lazy">`;return svg({...p,farbe:((p.farben||[])[ci||0]||{}).hex||'#8a7f72'})}
+function bildHTML(p,ci){const u=fImg(p,ci);if(u)return `<img src="${esc(safeUrl(u))}" alt="${esc(p.name)}" loading="lazy">`;return svg({...p,farbe:((p.farben||[])[ci||0]||{}).hex||'#8a7f72'})}
 // Farbe ohne eigenes Foto: Stoff per Canvas umfärben. Das Möbel wird über den Unterschied zum Hintergrund gefunden,
 // so funktioniert es auch bei hellen Sofas. Die Durchschnittsfarbe entspricht danach genau der gewählten Farbe.
 function hsl(hex){const n=parseInt(hex.slice(1),16);return rgb2hsl(n>>16,n>>8&255,n&255)}
