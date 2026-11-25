@@ -15,6 +15,14 @@ const DEFAULT={
  ],
  visits:[]
 };
+const FILIALEN=['Saalfeld (Musterstraße 1)','Rudolstadt (Beispielweg 5)'];
+const STEPS=['Bestellung eingegangen','Wird vorbereitet','Versandt','In Zustellung','Zugestellt'];
+function jl(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}}
+const cart={get:()=>jl('polster_cart',[]),set:c=>localStorage.setItem('polster_cart',JSON.stringify(c))};
+const user={get:()=>jl('polster_user',null),set:u=>localStorage.setItem('polster_user',JSON.stringify(u)),out:()=>localStorage.removeItem('polster_user')};
+const orders={all:()=>jl('polster_orders',[]),add:o=>{const a=orders.all();a.unshift(o);localStorage.setItem('polster_orders',JSON.stringify(a))},save:a=>localStorage.setItem('polster_orders',JSON.stringify(a))};
+// Demo-Tracking: Status schreitet je 20 Sekunden fort (echt: Versanddienstleister-API)
+function stepOf(o){if(o.manual!=null)return o.manual;return Math.min(STEPS.length-1,Math.floor((Date.now()-o.t)/20000))}
 function laden(){try{const r=JSON.parse(localStorage.getItem(KEY));if(r&&r.produkte)return r}catch(e){}return JSON.parse(JSON.stringify(DEFAULT))}
 function speichern(d){localStorage.setItem(KEY,JSON.stringify(d))}
 function reset(){localStorage.removeItem(KEY)}
@@ -30,4 +38,4 @@ function svg(p){const c=p.farbe,d=shade(c,-35),l=shade(c,28);const f=p.form;let 
 function bildHTML(p){return p.bild?`<img src="${p.bild}" alt="${p.name}">`:svg(p)}
 // Einwilligung (DSGVO): Statistik erst nach Klick
 function consent(){try{return JSON.parse(localStorage.getItem('polster_consent'))}catch(e){return null}}
-function trackVisit(){const c=consent();if(!c||!c.statistik)return;const d=laden();d.visits.push({t:Date.now(),p:location.pathname.split('/').pop()||'index'});if(d.visits.length>500)d.visits.shift();speichern(d)}
+function trackVisit(){const d=laden();d.visits.push({t:Date.now(),p:location.pathname.split('/').pop()||'index'});if(d.visits.length>500)d.visits.shift();speichern(d)}

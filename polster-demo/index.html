@@ -1,8 +1,8 @@
 <!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Polsterhaus Muster – Polstermöbel & Polsterei (Demo)</title><meta name="description" content="Demo-Webseite für einen Polstermöbelhandel mit Polsterei: Katalog mit Suche, Aktionen und Admin-Bereich zum selbst Bearbeiten.">
-<link rel="stylesheet" href="style.css"></head><body>
+<link rel="stylesheet" href="vendor/cc.css"><link rel="stylesheet" href="style.css"></head><body>
 <div class="akt" id="akt" hidden></div>
-<header><div class="wrap nav"><a class="logo" href="#">Polsterhaus Muster</a><nav><a href="#ausstellung">Ausstellung</a><a href="#polsterei">Polsterei</a><a href="#kontakt">Kontakt</a></nav></div></header>
+<header><div class="wrap nav"><a class="logo" href="#">Polsterhaus Muster</a><nav class="dn"><a href="#ausstellung">Ausstellung</a><a href="#polsterei">Polsterei</a><a href="#kontakt">Kontakt</a></nav><div class="hd-r"><a class="lnk" href="#" id="acc">Anmelden</a><button class="cartbtn" id="cb0">Warenkorb<b id="cn">0</b></button></div></div></header>
 <main>
 <div class="wrap hero"><div><h1 id="h-t"></h1><p id="h-p"></p><a class="btn" href="#ausstellung">Ausstellung ansehen</a> <a class="btn o" href="#kontakt">Termin anfragen</a></div><div class="heroimg" id="h-i"></div></div>
 <section id="ausstellung"><div class="wrap"><h2>Unsere Ausstellung</h2><p class="sub">Suchen Sie nach Name oder Kategorie, oder sortieren Sie nach Preis.</p>
@@ -13,10 +13,14 @@
 <section id="kontakt"><div class="wrap two"><div class="box"><h2>Kontakt</h2><p class="sub">Beispielangaben (Demo)</p><p>Musterstraße 1, 07318 Saalfeld<br>Tel. 03671 000000<br>Mo–Fr 9–18 Uhr, Sa 9–13 Uhr</p></div>
 <div class="box"><form onsubmit="event.preventDefault();this.innerHTML='<b>Danke! (Demo: Es wurde nichts gesendet.)</b>'"><input required placeholder="Name"><input type="email" required placeholder="E-Mail"><textarea rows="3" placeholder="Ihre Nachricht"></textarea><button class="btn">Anfrage senden</button></form></div></div></section>
 </main>
-<footer><div class="wrap">Demo-Entwurf mit Beispielinhalten · <a href="admin.html">Admin-Bereich (Demo-Passwort: demo)</a> · <a href="#" id="cs">Cookie-Einstellungen</a></div></footer>
-<div class="cookie" id="cb" role="dialog" aria-label="Cookies"><h4>Wir respektieren Ihre Privatsphäre</h4><p>Wir nutzen Cookies. Notwendige sind immer aktiv. Statistik und Marketing nur mit Ihrer Einwilligung.</p>
-<label><input type="checkbox" checked disabled> Notwendig</label><label><input type="checkbox" id="c-s"> Statistik (anonyme Besucherzahlen)</label><label><input type="checkbox" id="c-m"> Marketing</label>
-<div class="row"><button class="btn" id="c-all">Alle akzeptieren</button><button class="btn o" id="c-sel">Auswahl speichern</button><button class="btn o" id="c-no">Nur notwendige</button></div></div>
+<div class="dr" id="dr"><h3>Warenkorb <button class="lnk" id="dx">✕</button></h3><div class="in" id="di"></div><div class="ft"><div style="display:flex;justify-content:space-between;font-weight:700;margin-bottom:10px"><span>Summe</span><span id="dt"></span></div><button class="btn" id="dk" style="width:100%">Zur Kasse</button></div></div>
+<div class="mod" id="m-co"><div class="bx"><h2>Bestellung abschließen</h2><form id="fco" class="f" style="display:grid;gap:12px"><label>Name<input required id="co-n"></label><label>E-Mail<input type="email" required id="co-e"></label><label>Telefon<input required id="co-t"></label>
+<div><div class="note" style="margin-bottom:6px">Lieferung / Abholung</div><label class="opt"><input type="radio" name="lv" value="Lieferung" checked> Lieferung nach Hause (ab 49 €, Möbel-Spedition)</label><label class="opt"><input type="radio" name="lv" value="Abholung"> Abholung im Geschäft (kostenlos)</label></div>
+<label id="adr">Lieferadresse<input id="co-a" placeholder="Straße, PLZ, Ort"></label><label id="fil" hidden>Geschäft<select id="co-f"></select></label>
+<div><div class="note" style="margin-bottom:6px">Zahlung (Demo, es wird nichts abgebucht)</div><label class="opt"><input type="radio" name="zh" value="Karte" checked> Kreditkarte</label><label class="opt"><input type="radio" name="zh" value="PayPal"> PayPal</label><label class="opt"><input type="radio" name="zh" value="Rechnung"> Rechnung</label><label class="opt"><input type="radio" name="zh" value="Bar"> Barzahlung bei Abholung</label></div>
+<div style="font-weight:700;display:flex;justify-content:space-between"><span>Gesamt</span><span id="co-s"></span></div><button class="btn">Kostenpflichtig bestellen</button><button type="button" class="btn o" id="co-x">Abbrechen</button></form></div></div>
+<div class="mod" id="m-lg"><div class="bx"><h2 id="lg-h">Anmelden</h2><form id="flg" style="display:grid;gap:12px"><label id="lg-nl" hidden>Name<input id="lg-n"></label><label>E-Mail<input type="email" required id="lg-e"></label><label>Passwort<input type="password" required minlength="4" id="lg-p"></label><button class="btn" id="lg-b">Anmelden</button><button type="button" class="lnk" id="lg-sw">Noch kein Konto? Registrieren</button><button type="button" class="btn o" id="lg-x">Schließen</button><p class="note">Demo: Konto wird nur in diesem Browser gespeichert.</p></form></div></div>
+<footer><div class="wrap">Demo-Entwurf mit Beispielinhalten · <a href="admin.html">Admin-Bereich (Demo-Passwort: demo)</a> · <a href="#" data-cc="show-preferencesModal">Cookie-Einstellungen</a> · <a href="konto.html">Mein Konto / Bestellungen</a></div></footer>
 <script src="store.js"></script><script>
 const D=laden();let kat='Alle';
 const akt=document.getElementById('akt');if(D.aktion.aktiv&&D.aktion.text){akt.hidden=false;akt.innerHTML=`<a href="${D.aktion.link||'#'}">${D.aktion.text.replace(/</g,'&lt;')}</a>`}
@@ -27,12 +31,35 @@ document.getElementById('chips').innerHTML=kats.map(k=>`<span class="chip${k===k
 function render(){const q=document.getElementById('q').value.toLowerCase().trim(),s=document.getElementById('sort').value;
  let l=D.produkte.filter(p=>(kat==='Alle'||p.kat===kat)&&(p.name+' '+p.kat).toLowerCase().includes(q));
  if(s==='a')l.sort((a,b)=>a.preis-b.preis);if(s==='d')l.sort((a,b)=>b.preis-a.preis);
- document.getElementById('grid').innerHTML=l.length?l.map(p=>`<article class="card"><div class="im">${p.neu?'<span class="badge">Neu</span>':''}${bildHTML(p)}</div><div class="b"><div class="k">${p.kat}</div><h3>${p.name}</h3><div class="p">${p.preis.toLocaleString('de-DE')} €</div><a class="btn o" href="#kontakt">Anfragen</a></div></article>`).join(''):'<div class="leer" style="grid-column:1/-1">Nichts gefunden. Probieren Sie einen anderen Suchbegriff.</div>'}
+ document.getElementById('grid').innerHTML=l.length?l.map(p=>`<article class="card"><div class="im">${p.neu?'<span class="badge">Neu</span>':''}${bildHTML(p)}</div><div class="b"><div class="k">${p.kat}</div><h3>${p.name}</h3><div class="p">${p.preis.toLocaleString('de-DE')} €</div><button class="btn o" data-add="${p.id}">In den Warenkorb</button></div></article>`).join(''):'<div class="leer" style="grid-column:1/-1">Nichts gefunden. Probieren Sie einen anderen Suchbegriff.</div>'}
 document.getElementById('chips').onclick=e=>{const k=e.target.dataset.k;if(!k)return;kat=k;document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('on',c.dataset.k===k));render()};
 q.oninput=render;sort.onchange=render;render();
-// Cookie-Banner
-const cb=document.getElementById('cb');function save(s,m){localStorage.setItem('polster_consent',JSON.stringify({statistik:s,marketing:m,t:Date.now()}));cb.style.display='none';trackVisit()}
-if(!consent())cb.style.display='block';else trackVisit();
-c_all=document.getElementById('c-all').onclick=()=>save(true,true);document.getElementById('c-no').onclick=()=>save(false,false);document.getElementById('c-sel').onclick=()=>save(document.getElementById('c-s').checked,document.getElementById('c-m').checked);
-document.getElementById('cs').onclick=e=>{e.preventDefault();cb.style.display='block'};
+</script><script src="vendor/cc.js"></script><script>
+CookieConsent.run({hideFromBots:false,guiOptions:{consentModal:{layout:'box inline',position:'bottom left'}},onConsent:()=>{if(CookieConsent.acceptedCategory('analytics'))trackVisit()},
+ categories:{necessary:{enabled:true,readOnly:true},analytics:{}},
+ language:{default:'de',translations:{de:{consentModal:{title:'Wir verwenden Cookies',description:'Notwendige Cookies halten Warenkorb und Anmeldung am Laufen. Mit Ihrer Einwilligung messen wir zusätzlich anonym die Besucherzahlen.',acceptAllBtn:'Alle akzeptieren',acceptNecessaryBtn:'Nur notwendige',showPreferencesBtn:'Einstellungen'},
+ preferencesModal:{title:'Cookie-Einstellungen',acceptAllBtn:'Alle akzeptieren',acceptNecessaryBtn:'Nur notwendige',savePreferencesBtn:'Auswahl speichern',closeIconLabel:'Schließen',sections:[{title:'Notwendig',description:'Für Warenkorb und Anmeldung erforderlich.',linkedCategory:'necessary'},{title:'Statistik',description:'Anonyme Zählung der Seitenaufrufe.',linkedCategory:'analytics'}]}}}}});
+// Shop
+const $=i=>document.getElementById(i),eur=n=>n.toLocaleString('de-DE',{minimumFractionDigits:0})+' €';
+function cn(){return cart.get().reduce((a,i)=>a+i.q,0)}
+function drawCart(){const c=cart.get();$('cn').textContent=cn();let sum=0;$('di').innerHTML=c.length?c.map(i=>{const p=D.produkte.find(x=>x.id==i.id);if(!p)return'';sum+=p.preis*i.q;return`<div class="ci"><div class="th">${bildHTML(p)}</div><div><b style="font-size:14px">${p.name}</b><div class="note">${eur(p.preis)}</div></div><div class="qty"><button data-m="${p.id}">−</button> ${i.q} <button data-p="${p.id}">+</button></div></div>`}).join(''):'<p class="note">Ihr Warenkorb ist leer.</p>';$('dt').textContent=eur(sum);$('dk').disabled=!c.length;return sum}
+function openCart(o){$('dr').classList.toggle('on',o);if(o)drawCart()}
+$('cb0').onclick=()=>openCart(true);$('dx').onclick=()=>openCart(false);
+document.addEventListener('click',e=>{const a=e.target.dataset;if(a.add){const c=cart.get(),f=c.find(i=>i.id==a.add);f?f.q++:c.push({id:+a.add,q:1});cart.set(c);openCart(true)}
+ if(a.p||a.m){const c=cart.get(),id=a.p||a.m,f=c.find(i=>i.id==id);f.q+=a.p?1:-1;cart.set(c.filter(i=>i.q>0));drawCart()}});
+function sumNow(){return cart.get().reduce((a,i)=>{const p=D.produkte.find(x=>x.id==i.id);return a+(p?p.preis*i.q:0)},0)}
+function lv(){return document.querySelector('[name=lv]:checked').value}
+function upd(){const ab=lv()==='Abholung';$('adr').hidden=ab;$('fil').hidden=!ab;$('co-a').required=!ab;$('co-s').textContent=eur(sumNow()+(ab?0:49))}
+$('co-f').innerHTML=FILIALEN.map(f=>`<option>${f}`).join('');
+document.querySelectorAll('[name=lv]').forEach(r=>r.onchange=upd);
+$('dk').onclick=()=>{const u=user.get();if(!u){openCart(false);lgOpen('Zum Bestellen bitte anmelden');return}$('co-n').value=u.name;$('co-e').value=u.email;openCart(false);$('m-co').classList.add('on');upd()};
+$('co-x').onclick=()=>$('m-co').classList.remove('on');
+$('fco').onsubmit=e=>{e.preventDefault();const c=cart.get(),ab=lv()==='Abholung';const o={id:'PH-'+Math.floor(10000+Math.random()*89999),t:Date.now(),email:user.get().email,items:c.map(i=>{const p=D.produkte.find(x=>x.id==i.id);return{n:p.name,q:i.q,pr:p.preis}}),total:sumNow()+(ab?0:49),lv:lv(),ort:ab?$('co-f').value:$('co-a').value,zh:document.querySelector('[name=zh]:checked').value,name:$('co-n').value};orders.add(o);cart.set([]);drawCart();$('m-co').classList.remove('on');location.href='konto.html?neu='+o.id};
+// Login
+let reg=false;function lgOpen(t){reg=false;lgMode(t)}function lgMode(t){$('lg-h').textContent=t||(reg?'Registrieren':'Anmelden');$('lg-nl').hidden=!reg;$('lg-b').textContent=reg?'Konto erstellen':'Anmelden';$('lg-sw').textContent=reg?'Schon ein Konto? Anmelden':'Noch kein Konto? Registrieren';$('m-lg').classList.add('on')}
+$('lg-sw').onclick=()=>{reg=!reg;lgMode()};$('lg-x').onclick=()=>$('m-lg').classList.remove('on');
+$('flg').onsubmit=e=>{e.preventDefault();const em=$('lg-e').value.toLowerCase(),acc=jl('polster_accounts',{});if(reg){acc[em]={name:$('lg-n').value||em,p:$('lg-p').value};localStorage.setItem('polster_accounts',JSON.stringify(acc))}else if(!acc[em]||acc[em].p!==$('lg-p').value){$('lg-p').setCustomValidity('E-Mail oder Passwort falsch');$('lg-p').reportValidity();setTimeout(()=>$('lg-p').setCustomValidity(''),1500);return}
+ user.set({email:em,name:acc[em].name});$('m-lg').classList.remove('on');acctxt()};
+function acctxt(){const u=user.get();$('acc').textContent=u?u.name+' · Konto':'Anmelden';$('acc').href=u?'konto.html':'#'}
+$('acc').onclick=e=>{if(!user.get()){e.preventDefault();lgOpen()}};acctxt();drawCart();
 </script></body></html>
