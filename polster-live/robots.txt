@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Sitemap: https://lawago23.github.io/portfolio-v7-demo/polster-live/sitemap.xml
