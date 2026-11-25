@@ -103,3 +103,5 @@ form input,form textarea,form select,.f input,.f select{width:100%;min-width:0;b
 input[type=file]{font-size:13px}
 
 .pim+.note{margin-top:12px}.sw{margin:8px 0 6px}
+
+.offer{background:transparent!important;border:0!important;color:var(--mut)!important;padding:0!important;margin:0 0 14px!important;font-size:14px;display:block!important}.chip.sale{border-color:var(--acc);color:var(--acc);font-weight:600}.chip.sale.on{background:var(--acc);color:#fff}
