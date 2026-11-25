@@ -5,7 +5,7 @@
 <meta name="google" content="notranslate">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Renat / Portfolio · Websites für Gastronomie</title>
-<meta name="description" content="Sechs Websites, sechs Handschriften: Seiten und digitale Speisekarten für Pizzeria, Döner, Nudelbar, Rösterei und Salon.">
+<meta name="description" content="Vier Websites, vier Handschriften: Seiten und digitale Speisekarten für Imbiss, Bäckerei, Salon und Restaurant.">
 <meta property="og:title" content="Renat / Portfolio · Websites für Gastronomie">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://lawago23.github.io/portfolio-v7-demo/">
@@ -331,7 +331,7 @@ html[lang="ru"] .t-de { display: none !important; }
 /* ==================== WORK STAGE ==================== */
 .work {
   position: relative;
-  height: calc(100svh * 6.6);
+  height: calc(100svh * 4.5);
   --g1: #04283a; --g2: #031f2d; --g3: #021a26; --ang: 180deg;
   background: linear-gradient(var(--ang), var(--g1) 0%, var(--g2) 48%, var(--g3) 100%);
   color: #f6f1f6;
@@ -1086,7 +1086,7 @@ body::before{content:"";position:fixed;top:0;left:0;width:100%;height:100vh;heig
     <div class="hero-show" id="heroShow">
       <div class="hs-frame"><div class="hs-bar"><i></i><i></i><i></i><u id="hsUrl"></u></div><div class="hs-imgs" id="hsImgs"></div></div>
       <div class="hs-cap"><span id="hsNo">01</span><b id="hsName"></b></div>
-      <div class="hs-ticks" id="hsTicks" role="tablist" aria-label="6 Websites"></div>
+      <div class="hs-ticks" id="hsTicks" role="tablist" aria-label="4 Websites"></div>
     </div>
   </div>
 </section>
@@ -1363,67 +1363,46 @@ body::before{content:"";position:fixed;top:0;left:0;width:100%;height:100vh;heig
 (function(){
 var S = [
   {
-    n: "Pizzeria Pugliese",
-    p: "img/shots/s1.jpg",
-    t_de: "Feuer als Auftakt",
-    d_de: "Dunkle Seite mit dem Holzofen im Bild. Gemacht für den Abend.",
-    t_ru: "Огонь как визитная карточка",
-    d_ru: "Тёмная страница с дровяной печью во весь экран. Сделана для вечера.",
-    u: "../pizza/",
-    live_u: "https://lawago23.github.io/pugliese-forno-demo/",
-    bg: "#15100d",
-    ink: "#f4ece1"
+    n: "NAMI Speisekarte",
+    p: "img/shots/s6.jpg",
+    t_de: "Die Karte als Welle",
+    d_de: "Das Menü als gedruckte Karte: 119 Gerichte, Suche, Filter, vier Sprachen und Warenkorb.",
+    t_ru: "Меню как волна",
+    d_ru: "Меню как печатная карта: 119 блюд, поиск, фильтр, четыре языка и корзина.",
+    u: "", live_u: "sites/nami-v2/", bg: "#0a0d22", ink: "#eef0ff"
   },
   {
-    n: "Studio Nova",
-    p: "img/shots/s8.jpg",
-    t_de: "Der Terminbuch-Kalender",
-    d_de: "Barbershop und Nagelstudio: Tag, Uhrzeit und Person wählen, freie Zeiten sind anklickbar.",
-    t_ru: "Календарь-ежедневник",
-    d_ru: "Барбершоп и маникюр: выбираешь день, время и мастера, свободные слоты кликабельны.",
-    u: "", live_u: "sites/studio-nova/", bg: "#efe4de", ink: "#3a1830"
+    n: "Backstube Korn",
+    p: "img/shots/s5.jpg",
+    t_de: "Von vier bis sechs Uhr",
+    d_de: "Creme und Tannengrün, das Foto in der Bogenform des Ofens. Eine Uhr zählt mit dem Teig von vier bis sechs hoch.",
+    t_ru: "С четырех до шести утра",
+    d_ru: "Кремовый и хвойно-зелёный, фото в форме арки печи. Часы отсчитывают время теста с четырёх до шести.",
+    u: "../baeckerei/",
+    live_u: "https://lawago23.github.io/baeckerei-eifel-demo/",
+    bg: "#f4ead7",
+    ink: "#2b1d0e"
   },
   {
-    n: "AURUM Rösterei",
-    p: "img/shots/s10.jpg",
-    t_de: "Scrollen ist Rösten",
-    d_de: "Eine Charge von Grün bis Dunkel, vom Scrollen gesteuert. Dazu sechs Sorten und Bestellung per WhatsApp.",
-    t_ru: "Скролл это обжарка",
-    d_ru: "Одна партия от зелёного до тёмного, её ведёт скролл. Шесть сортов и заказ в WhatsApp.",
-    u: "", live_u: "sites/aurum/", bg: "#1b110c", ink: "#f1e4d0"
+    n: "Studio Vela",
+    p: "img/shots/s9.jpg",
+    t_de: "Erst der Mensch, dann die Leistung",
+    d_de: "Man wählt zuerst die Person, sieht ihre nächste freie Zeit und dann die Leistungen.",
+    t_ru: "Сначала человек, потом услуга",
+    d_ru: "Сначала выбираешь мастера, видишь его ближайшее время, потом услуги.",
+    u: "", live_u: "sites/studio-vela/", bg: "#0b3a3c", ink: "#f6efdc"
   },
   {
-    n: "Emosh's Döner & Pizza",
-    p: "img/shots/s4.jpg",
-    t_de: "Zwei Küchen, eine Diagonale",
-    d_de: "Tiefes Türkis, Orange als einziger Akzent, das Foto schneidet diagonal ins Bild.",
-    t_ru: "Две кухни, одна диагональ",
-    d_ru: "Глубокий бирюзовый, оранжевый акцент, фото срезано по диагонали.",
-    u: "../emoshs/",
-    live_u: "https://lawago23.github.io/emoshs-neu-demo/",
-    bg: "#0e3b3a",
-    ink: "#f5efe3"
-  },
-  {
-    n: "Döner der Sonne",
-    p: "img/shots/s2.jpg",
-    t_de: "Laut und gelb",
-    d_de: "Senfgelb, große Schrift, ein Laufband. Man sieht es von der anderen Straßenseite.",
-    t_ru: "Ярко и заметно издалека",
-    d_ru: "Горчично-жёлтый, крупный шрифт, бегущая строка. Видно с другой стороны улицы.",
-    u: "../doener/",
-    live_u: "https://lawago23.github.io/doener-sonne-neu-demo/",
-    bg: "#f6b81b",
-    ink: "#1a1208"
-  },
-  {
-    n: "KIKU Nudelbar",
-    p: "img/shots/s7.jpg",
-    t_de: "Die Schale selbst bauen",
-    d_de: "Gäste stellen ihre Schale selbst zusammen: Brühe, Nudeln, Toppings. Die Bestellung geht per WhatsApp raus.",
-    t_ru: "Собери миску сам",
-    d_ru: "Гость собирает миску сам: бульон, лапша, добавки. Заказ уходит в WhatsApp.",
-    u: "", live_u: "sites/nami-menu/", bg: "#f1ebdd", ink: "#231a14"
+    n: "einfach starck der INbiss",
+    p: "img/shots/s3.jpg",
+    t_de: "Die Karte als Kassenbon",
+    d_de: "Papierlook, Schreibmaschinenschrift und ein Stempel, wie beim Bestellen am Tresen.",
+    t_ru: "Меню в стиле кассового чека",
+    d_ru: "Вид бумаги, шрифт печатной машинки и штамп, как при заказе у стойки.",
+    u: "../imbiss/",
+    live_u: "https://lawago23.github.io/einfach-starck-neu-demo/",
+    bg: "#ecebe5",
+    ink: "#101010"
   }
 ];
 
