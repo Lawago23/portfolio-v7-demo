@@ -1007,6 +1007,14 @@ body::before{content:"";position:fixed;top:0;left:0;width:100%;height:100vh;heig
 .fab-wa svg{width:20px;height:20px;fill:currentColor}
 .fab-wa.on{transform:none;opacity:1}
 @media (max-width:900px){.fab-wa{display:inline-flex}}
+
+.strip{position:relative;z-index:2;padding:0 var(--gut);background:linear-gradient(rgba(2,26,38,.34),rgba(2,26,38,.42))}
+.strip .in{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr) auto;gap:clamp(14px,3vw,40px);align-items:center;
+ padding:22px 0;border-top:1px solid rgba(242,239,232,.14);border-bottom:1px solid rgba(242,239,232,.14)}
+.strip b{display:block;font:700 clamp(20px,2.4vw,28px)/1.1 var(--d);color:var(--fg);letter-spacing:-.02em}
+.strip small{display:block;margin-top:6px;font:400 13px/1.35 var(--t);color:var(--mut)}
+.strip a{font:600 15px/1 var(--t);color:var(--fg);text-decoration:none;border-bottom:2px solid var(--acc);padding-bottom:4px;white-space:nowrap}
+@media (max-width:900px){.strip .in{grid-template-columns:1fr 1fr;padding:18px 0}.strip a{grid-column:1/-1;justify-self:start}}
 </style>
 <style>
 /* Mobile: tap a preview to open it full screen and scroll it live */
@@ -1083,6 +1091,12 @@ body::before{content:"";position:fixed;top:0;left:0;width:100%;height:100vh;heig
   </div>
 </section>
 
+<div class="strip"><div class="in">
+  <div><b><span class="t-de">ab 120 €</span><span class="t-ru">от 120 €</span></b><small><span class="t-de">Festpreis, eine Änderungsrunde inklusive</span><span class="t-ru">Фиксированная цена, один раунд правок в цене</span></small></div>
+  <div><b><span class="t-de">3–5 Tage</span><span class="t-ru">3–5 дней</span></b><small><span class="t-de">von der Speisekarte bis online</span><span class="t-ru">от меню до запуска</span></small></div>
+  <div><b><span class="t-de">QR-Code</span><span class="t-ru">QR-код</span></b><small><span class="t-de">druckfertig für Tische &amp; Schaufenster</span><span class="t-ru">для печати на столы и витрины</span></small></div>
+  <a href="#kontakt"><span class="t-de">Preis anfragen</span><span class="t-ru">Узнать цену</span></a>
+</div></div>
 <!-- ==================== WORK STAGE ==================== -->
 <section class="work" id="arbeiten" aria-label="Arbeiten">
   <div class="pin">
