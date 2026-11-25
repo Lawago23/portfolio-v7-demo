@@ -2,7 +2,7 @@
 const KEY='polster_demo_v1';
 const DEFAULT={
  aktion:{aktiv:true,text:'Frühjahrsaktion: 15 % auf alle Polsterservice-Aufträge bis 31.03.',link:'#polsterei'},
- hero:{titel:'Polstermöbel, die zu Ihnen passen.',text:'Sofas, Sessel und Betten aus unserer Ausstellung – und die eigene Polsterei für Neubezug und Reparatur.',bild:''},
+ hero:{titel:'Polstermöbel, die zu Ihnen passen.',text:'Sofas, Sessel und Betten aus unserer Ausstellung – und die eigene Polsterei für Neubezug und Reparatur.',bild:'img/hero.jpg'},
  produkte:[
   {id:1,name:'Sofa Lindau 3-Sitzer',kat:'Sofas',preis:1290,farbe:'#6b7f6a',form:'sofa',neu:true,bild:''},
   {id:2,name:'Sofa Arnsberg 2-Sitzer',kat:'Sofas',preis:890,farbe:'#9a6b4f',form:'sofa',neu:false,bild:''},
