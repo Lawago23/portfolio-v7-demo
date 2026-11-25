@@ -1,6 +1,6 @@
 <!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Polsterhaus Muster – Polstermöbel & Polsterei (Demo)</title><meta name="description" content="Demo-Webseite für einen Polstermöbelhandel mit Polsterei: Katalog mit Suche, Aktionen und Admin-Bereich zum selbst Bearbeiten.">
-<link rel="stylesheet" href="vendor/cc.css"><link rel="stylesheet" href="style.css?v=7"></head><body>
+<link rel="stylesheet" href="vendor/cc.css"><link rel="stylesheet" href="style.css?v=8"></head><body>
 <div class="akt" id="akt" hidden></div><div class="demobar">Demo-Version · <a href="admin.html">Admin-Bereich ansehen (Passwort: demo)</a></div>
 <header><div class="wrap nav"><a class="logo" href="#">Polsterhaus Muster</a><nav class="dn"><a href="#ausstellung">Ausstellung</a><a href="#polsterei">Polsterei</a><a href="#kontakt">Kontakt</a></nav><div class="hd-r"><a class="lnk" href="#" id="acc">Anmelden</a><button class="cartbtn" id="cb0">Warenkorb<b id="cn">0</b></button></div></div></header>
 <main>
@@ -22,7 +22,7 @@
 <div style="font-weight:700;display:flex;justify-content:space-between"><span>Gesamt</span><span id="co-s"></span></div><button class="btn">Kostenpflichtig bestellen</button><button type="button" class="btn o" id="co-x">Abbrechen</button></form></div></div>
 <div class="mod" id="m-lg"><div class="bx"><h2 id="lg-h">Anmelden</h2><form id="flg" style="display:grid;gap:12px"><label id="lg-nl" hidden>Name<input id="lg-n"></label><label>E-Mail<input type="email" required id="lg-e"></label><label>Passwort<input type="password" required minlength="4" id="lg-p"></label><button class="btn" id="lg-b">Anmelden</button><button type="button" class="lnk" id="lg-sw">Noch kein Konto? Registrieren</button><button type="button" class="btn o" id="lg-x">Schließen</button><p class="note">Demo: Konto wird nur in diesem Browser gespeichert.</p></form></div></div>
 <footer><div class="wrap">Demo-Entwurf mit Beispielinhalten · <a href="admin.html"><b>Admin-Bereich öffnen (Demo-Passwort: demo)</b></a> · <a href="#" data-cc="show-preferencesModal">Cookie-Einstellungen</a> · <a href="konto.html">Mein Konto / Bestellungen</a></div></footer>
-<script src="store.js?v=7"></script><script>
+<script src="store.js?v=8"></script><script>
 const D=laden();let kat='Alle';
 const akt=document.getElementById('akt');if(D.aktion.aktiv&&D.aktion.text){akt.hidden=false;akt.innerHTML=`<a href="${D.aktion.link||'#'}">${D.aktion.text.replace(/</g,'&lt;')}</a>`}
 document.getElementById('h-t').textContent=D.hero.titel;document.getElementById('h-p').textContent=D.hero.text;
