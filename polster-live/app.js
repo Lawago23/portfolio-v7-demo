@@ -74,7 +74,10 @@ $('fco').onsubmit=async e=>{e.preventDefault();const c=cart.get(),ab=lv()==='Abh
  const ort=ab?$('co-f').value:$('co-str').value.trim()+', '+$('co-plz').value+' '+$('co-ort').value.trim();
  const r=await SB.rpc('place_order',{p_items:c.map(i=>({id:i.id,q:i.q,c:i.c||'',g:i.g||'',s:i.s||''})),p_lv:lv(),p_ort:ort,p_zh:document.querySelector('[name=zh]:checked').value,p_name:$('co-n').value,p_tel:$('co-t').value,p_code:$('co-c').value||null});
  if(btn)btn.disabled=false;if(r.error){alert('Bestellung nicht möglich: '+r.error.message);return}
- cart.set([]);drawCart();$('m-co').classList.remove('on');location.href='konto.html?neu='+encodeURIComponent(r.data.id)};
+ cart.set([]);drawCart();$('m-co').classList.remove('on');
+ const zhv=document.querySelector('[name=zh]:checked').value;
+ if(zhv==='Karte'||zhv==='PayPal'){const f=await SB.functions.invoke('checkout',{body:{action:'create',order_id:r.data.id,return_url:location.origin+location.pathname.replace(/[^/]*$/,'')+'konto.html'}});if(f.data&&f.data.url){location.href=f.data.url;return}}
+ location.href='konto.html?neu='+encodeURIComponent(r.data.id)};
 let cur=null,ci=0,gSel='',sSel='';
 const dsel=(l,v)=>l.map(o=>`<option value="${esc(o.n)}"${o.n===v?' selected':''}>${esc(o.n)}${+o.d?(o.d>0?' (+'+o.d+' €)':' ('+o.d+' €)'):''}</option>`).join('');
 function curPrice(){return unit(cur,{g:gSel,s:sSel})}
