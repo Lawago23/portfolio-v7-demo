@@ -90,3 +90,14 @@ html,body{overflow-x:hidden;max-width:100%}
 @media(max-width:700px){.logo{font-size:15px!important}.cartbtn{font-size:13px!important;padding:8px 12px!important}#acc{font-size:13px!important}.lsw button{padding:3px 7px;font-size:11px}}
 
 @media(max-width:380px){.logo{font-size:12px!important}.cartbtn{font-size:11px!important;padding:7px 8px!important}.cartbtn b{padding:0 5px}#acc{font-size:11px!important}.hd-r{gap:2px!important}.wrap{padding-left:14px;padding-right:14px}}
+
+.demo-adm{display:none!important}.langbar{justify-content:space-between;align-items:center}.demo-link{font-size:12px;font-weight:700;color:var(--acc2);text-decoration:none;background:#fff7d6;border:1px solid #e8d98a;padding:4px 10px;border-radius:999px}
+.card{display:flex;flex-direction:column}.card .b{display:flex;flex-direction:column;flex:1}.card h3{min-height:2.7em;line-height:1.35;overflow-wrap:anywhere}.card .dots{min-height:16px}.card .p{margin-top:auto;padding-top:8px}.card .cmpl{margin:6px 0}
+h1,h2,h3,p,li,button,.btn,label,a{overflow-wrap:anywhere}
+.nav,.nav nav,.hd-r{align-items:center}
+
+.two>*,.box,.pgrid>*,.grid>*{min-width:0}input,select,textarea{max-width:100%}
+@media(max-width:800px){.two,.hero,.pgrid{grid-template-columns:minmax(0,1fr)!important}}
+
+form input,form textarea,form select,.f input,.f select{width:100%;min-width:0;box-sizing:border-box}
+input[type=file]{font-size:13px}

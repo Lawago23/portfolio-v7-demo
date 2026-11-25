@@ -21,10 +21,19 @@ function svg(p){const c=p.farbe||'#8a7f72',d=shade(c,-35),l=shade(c,28);const f=
  return `<svg viewBox="0 0 300 180" role="img" aria-label="${p.name}"><ellipse cx="150" cy="166" rx="120" ry="7" fill="rgba(0,0,0,.12)"/>${s}</svg>`}
 function fImg(p,ci){const f=(p.farben||[])[ci||0];if(f&&f.bild)return f.bild;if(p.bild)return p.bild;return ''}
 function bildHTML(p,ci){const u=fImg(p,ci);if(u)return `<img src="${u}" alt="${p.name}" loading="lazy">`;return svg({...p,farbe:((p.farben||[])[ci||0]||{}).hex||'#8a7f72'})}
-// Farbe ohne eigenes Foto: Stoff per Canvas umfärben (Fallback)
-function recolor(src,hex,cb){const im=new Image();im.onload=()=>{const c=document.createElement('canvas');c.width=im.width;c.height=im.height;const x=c.getContext('2d');x.drawImage(im,0,0);const d=x.getImageData(0,0,c.width,c.height),a=d.data;const t=hsl(hex);for(let i=0;i<a.length;i+=4){const [h,s,l]=rgb2hsl(a[i],a[i+1],a[i+2]);if(s>0.3&&l>0.1&&l<0.78){const [r,g,b]=hsl2rgb(t[0],Math.min(.42,(s+t[1])/2*.62),Math.max(.1,l*.9));a[i]=r;a[i+1]=g;a[i+2]=b}}x.putImageData(d,0,0);cb(c.toDataURL('image/jpeg',.85))};im.src=src}
+// Farbe ohne eigenes Foto: Stoff per Canvas umfärben. Das Möbel wird über den Unterschied zum Hintergrund gefunden,
+// so funktioniert es auch bei hellen Sofas. Die Durchschnittsfarbe entspricht danach genau der gewählten Farbe.
 function hsl(hex){const n=parseInt(hex.slice(1),16);return rgb2hsl(n>>16,n>>8&255,n&255)}
 function rgb2hsl(r,g,b){r/=255;g/=255;b/=255;const m=Math.max(r,g,b),n=Math.min(r,g,b),l=(m+n)/2;let h=0,s=0;if(m!==n){const d=m-n;s=l>.5?d/(2-m-n):d/(m+n);h=m===r?(g-b)/d+(g<b?6:0):m===g?(b-r)/d+2:(r-g)/d+4;h/=6}return[h,s,l]}
 function hsl2rgb(h,s,l){const f=(p,q,t)=>{if(t<0)t+=1;if(t>1)t-=1;return t<1/6?p+(q-p)*6*t:t<1/2?q:t<2/3?p+(q-p)*(2/3-t)*6:p};if(!s)return[l*255,l*255,l*255];const q=l<.5?l*(1+s):l+s-l*s,p=2*l-q;return[f(p,q,h+1/3)*255,f(p,q,h)*255,f(p,q,h-1/3)*255]}
+function loadImg(src,cb){const im=new Image();im.crossOrigin='anonymous';im.onload=()=>cb(im);im.onerror=()=>cb(null);im.src=src}
+function maskOf(a,w,h){const px=(x,y)=>{const i=(y*w+x)*4;return[a[i],a[i+1],a[i+2]]};const pts=[[2,2],[w-3,2],[Math.floor(w/2),2],[2,Math.floor(h*.3)],[w-3,Math.floor(h*.3)],[2,h-3],[w-3,h-3]];let bg=[0,0,0];pts.forEach(p=>{const c=px(p[0],p[1]);bg=bg.map((v,k)=>v+c[k]/pts.length)});
+ const m=new Uint8Array(w*h);for(let y=0;y<h;y++)for(let x=0;x<w;x++){const i=(y*w+x)*4;const d=Math.abs(a[i]-bg[0])+Math.abs(a[i+1]-bg[1])+Math.abs(a[i+2]-bg[2]);if(d>70&&y<h*.88)m[y*w+x]=1}return m}
+const COLCACHE={};
+function realHex(src,cb){if(COLCACHE[src])return cb(COLCACHE[src]);loadImg(src,im=>{if(!im)return cb(null);const w=120,h=Math.round(120*im.height/im.width),c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');x.drawImage(im,0,0,w,h);let d;try{d=x.getImageData(0,0,w,h).data}catch(e){return cb(null)}const m=maskOf(d,w,h);let r=0,g=0,b=0,n=0;for(let i=0;i<w*h;i++)if(m[i]){r+=d[i*4];g+=d[i*4+1];b+=d[i*4+2];n++}if(n<50)return cb(null);const hx='#'+[r/n,g/n,b/n].map(v=>Math.round(v).toString(16).padStart(2,'0')).join('');COLCACHE[src]=hx;cb(hx)})}
+function recolor(src,hex,cb){loadImg(src,im=>{if(!im)return cb(src);const c=document.createElement('canvas');c.width=im.width;c.height=im.height;const x=c.getContext('2d');x.drawImage(im,0,0);let id;try{id=x.getImageData(0,0,c.width,c.height)}catch(e){return cb(src)}const a=id.data,w=c.width,h=c.height;const m=maskOf(a,w,h);
+ let sh=0,ss=0,sl=0,n=0;for(let i=0;i<w*h;i++)if(m[i]){const q=rgb2hsl(a[i*4],a[i*4+1],a[i*4+2]);ss+=q[1];sl+=q[2];n++}ss/=n||1;sl/=n||1;const t=hsl(hex);const kl=Math.max(.35,Math.min(3.8,t[2]/(sl||.5)));
+ for(let i=0;i<w*h;i++)if(m[i]){const q=rgb2hsl(a[i*4],a[i*4+1],a[i*4+2]);const l=Math.max(0,Math.min(1,q[2]*kl));const s=Math.max(0,Math.min(1,t[1]*(.55+.45*(q[1]/(ss||.2)))));const o=hsl2rgb(t[0],s,l);a[i*4]=o[0];a[i*4+1]=o[1];a[i*4+2]=o[2]}
+ x.putImageData(id,0,0);cb(c.toDataURL('image/jpeg',.88))})}
 function preisHTML(p){return p.aktion?`<span style="color:#b3261e">${p.aktion.toLocaleString('de-DE')} €</span> <s style="color:var(--mut);font-size:14px;font-weight:400">${p.preis.toLocaleString('de-DE')} €</s>`:`${p.preis.toLocaleString('de-DE')} €`}
 function preisNum(p){return p.aktion||p.preis}
