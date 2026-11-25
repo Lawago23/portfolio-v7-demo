@@ -54,3 +54,8 @@ html,body{overflow-x:hidden;max-width:100%}
 .card{transition:box-shadow .2s,border-color .2s}.card:hover{box-shadow:0 10px 28px rgba(18,51,42,.12);border-color:#c5d0c8}
 .card .im{border-bottom:1px solid var(--line)}h2{letter-spacing:-.01em}.hero{padding-block:64px}
 .heroimg{box-shadow:0 24px 60px rgba(18,51,42,.18)}.btn{box-shadow:0 1px 0 rgba(0,0,0,.05)}
+
+.chk{display:flex;gap:6px;align-items:center;font-size:14px;color:var(--mut)}.chip.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+.heart{position:absolute;right:10px;bottom:10px;background:#fff;border:0;border-radius:50%;width:34px;height:34px;font-size:17px;color:#b7bdb9;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.15)}.heart.on{color:#c0392b}
+.sm{padding:7px 14px;font-size:13px}#rv-s{padding:8px;border:1px solid var(--line);border-radius:8px}
+.tools select{min-width:150px}
