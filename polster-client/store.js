@@ -1,5 +1,5 @@
 const SB=supabase.createClient('https://jthmekehipiolsxtjavb.supabase.co','sb_publishable__YUQh9Vgtda2nPwyxn-hTw_oMXZDe5-');
-const FILIALEN=['Saalfeld (Musterstraße 1)','Rudolstadt (Beispielweg 5)'];
+const FILIALEN=(typeof CLIENT!=='undefined'&&CLIENT.filialen)||['Filiale 1'];
 const STEPS=['Bestellung eingegangen','Wird vorbereitet','Versandt','In Zustellung','Zugestellt'];
 function jl(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}}
 const cart={get:()=>jl('polster_cart',[]),set:c=>localStorage.setItem('polster_cart',JSON.stringify(c))};

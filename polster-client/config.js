@@ -1,10 +1,10 @@
 // Konfiguration des Kunden (Template): alles Kundenspezifische steht hier.
 const CLIENT={
  name:'Polsterhaus Muster',rechtsform:'Einzelunternehmen',inhaber:'Max Mustermann',
- strasse:'Musterstraße 1',plz:'07318',ort:'Saalfeld',
- tel:'03671 000000',email:'info@polsterhaus-muster.example',
+ strasse:'Wrangelstraße 45',plz:'10997',ort:'Berlin',
+ tel:'030 00000000',email:'info@polsterhaus-muster.example',
  ustid:'DE000000000',handelsregister:'',aufsicht:'',
- filialen:['Saalfeld (Musterstraße 1)','Rudolstadt (Beispielweg 5)'],
+ filialen:['Berlin-Kreuzberg (Wrangelstraße 45)','Berlin-Prenzlauer Berg (Dunckerstraße 30)'],
  oeffnung:'Mo–Fr 9–18 Uhr, Sa 9–13 Uhr',
  versand:'Lieferung ab 49 €, ab 1.500 € versandkostenfrei, Abholung kostenlos',
  widerruf:14,
@@ -14,3 +14,6 @@ const CLIENT={
  demo:false
 };
 const BUILD='2026-11-25 21:00';
+
+// Automatische Aktualisierung: lädt die Seite neu, wenn eine neuere Version online ist (kein manuelles Cache-Leeren nötig)
+(async()=>{try{const t=await (await fetch('config.js?nc='+Date.now(),{cache:'no-store'})).text();const m=t.match(/BUILD='([^']+)'/);if(m&&m[1]!==BUILD&&!sessionStorage.getItem('rl_'+m[1])){sessionStorage.setItem('rl_'+m[1],'1');const u=new URL(location.href);u.searchParams.set('b',m[1]);location.replace(u.toString())}}catch(e){}})();
