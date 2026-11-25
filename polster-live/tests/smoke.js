@@ -1,0 +1,24 @@
+const pw=require(process.env.PW);const fs=require('fs');
+const pwd=fs.readFileSync(process.env.HOME+'/Desktop/Бизнес/Документы/supabase_доступ.txt','utf8').match(/пароль: (.*)/)[1].trim();
+(async()=>{const b=await pw.webkit.launch();const B=process.env.B||'http://localhost:8765/polster-live/';const r={};const e=[];
+const c=await b.newContext({...pw.devices['iPhone 13']});const p=await c.newPage();p.on('pageerror',x=>e.push('js:'+x.message));p.on('console',m=>{if(m.type()==='error'||/Content Security/.test(m.text()))e.push('c:'+m.text().slice(0,140))});
+const st=async(k,f)=>{try{await f();r[k]='ok'}catch(x){r[k]='FAIL '+x.message.slice(0,110)}};
+await p.goto(B+'index.html?x='+Date.now());await p.waitForTimeout(4500);r.cards=await p.locator('.card').count();
+await st('faq+usp+callbar',async()=>{r.faq=await p.locator('#faq-l details').count();r.usp=await p.locator('.usp div').count();r.call=await p.isVisible('#callbar')});
+await st('cookie',()=>p.click('text=Alle akzeptieren',{timeout:5000}));
+await st('permalink',async()=>{await p.fill('#q','Kassel');await p.click('.card [data-o] >> nth=0');await p.waitForTimeout(700);r.url=p.url().split('?')[1];r.title=await p.title();await p.keyboard.press('Escape');await p.waitForTimeout(400);r.afterEsc=p.url().split('?')[1]||'(none)';r.modalClosed=!(await p.isVisible('#m-p'))});
+await st('open ?p=3',async()=>{const q=await c.newPage();await q.goto(B+'index.html?p=3');await q.waitForTimeout(4500);r.deeplinkOpen=await q.isVisible('#m-p');r.deeplinkName=await q.textContent('#p-n');await q.close()});
+await st('register+order',async()=>{await p.fill('#q','');await p.fill('#q','Lindau');await p.click('.card [data-o] >> nth=0');await p.click('#p-add');await p.click('#dk');await p.click('#lg-sw');await p.fill('#lg-n','Full Test');await p.fill('#lg-e','full'+Date.now()+'@test.de');await p.fill('#lg-p','abcdef12');await p.click('#lg-b');await p.waitForTimeout(3000);await p.fill('#co-t','0151');await p.fill('#co-a','Str 1, 10997 Berlin');await p.check('#fco input[type=checkbox]');await p.click('#fco button.btn:not(.o)');await p.waitForURL('**/konto.html*',{timeout:12000});await p.waitForTimeout(2500);r.orders=await p.locator('.ord').count()});
+await st('retoure',async()=>{r.hasInvoiceLink=await p.locator('a:has-text("Rechnung ansehen")').count();r.retoureBtn=await p.locator('button:has-text("Retoure anmelden")').count()});
+await st('invoice',async()=>{await p.click('a:has-text("Rechnung ansehen")');await p.waitForURL('**/rechnung.html*');await p.waitForTimeout(2500);r.inv=(await p.textContent('#inv')).replace(/\s+/g,' ').slice(0,170)});
+await st('widerruf form',async()=>{const q=await c.newPage();await q.goto(B+'widerruf-erklaeren.html');await q.fill('#w-n','T');await q.fill('#w-e','t@t.de');await q.fill('#w-b','PH-000000');await q.click('#wf button');await q.waitForTimeout(2500);r.wd=(await q.textContent('#w-ok')).slice(0,110);await q.close()});
+await st('pages',async()=>{for(const pg of ['versand','barrierefreiheit','impressum','datenschutz','passwort']){const q=await c.newPage();const x=await q.goto(B+pg+'.html');r['p_'+pg]=x.status();await q.close()}});
+// admin
+const c2=await b.newContext({viewport:{width:1280,height:900}});const a=await c2.newPage();a.on('pageerror',x=>e.push('adm:'+x.message));a.on('console',m=>{if(m.type()==='error')e.push('adm c:'+m.text().slice(0,140))});
+await a.goto(B+'admin.html?x='+Date.now());await a.waitForTimeout(1500);
+await st('demoAdmin',async()=>{await a.click('#demo');await a.waitForTimeout(5000);if(!await a.isVisible('#app'))throw new Error('no app')});
+await st('tabs',async()=>{await a.click('.tab[data-t="x"]');await a.waitForTimeout(500);r.rt=await a.locator('#rt .row').count();r.wdAdm=await a.locator('#wd .row').count();await a.click('.tab[data-t="w"]');await a.waitForTimeout(800);r.mfaSt=await a.textContent('#mfa-st');r.codes=await a.locator('#cd .row').count()});
+await st('backup',async()=>{const [dl]=await Promise.all([a.waitForEvent('download'),a.click('#bk')]);r.backup=dl.suggestedFilename()});
+await st('report src',async()=>{await a.click('.tab[data-t="r"]');await a.waitForTimeout(500);r.src=(await a.textContent('#r-src')).slice(0,60)});
+await st('stock',async()=>{await a.click('.tab[data-t="m"]');await a.click('#list .row:last-child [data-e]');await a.fill('#e-bs','0');await a.click('#e-s');await a.waitForTimeout(2500);const q=await c.newPage();await q.goto(B+'index.html?p=8');await q.waitForTimeout(4500);r.stock0=(await q.textContent('#p-st'))+' / disabled='+(await q.isDisabled('#p-add'));await q.close();await a.click('#list .row:last-child [data-e]');await a.fill('#e-bs','');await a.click('#e-s');await a.waitForTimeout(2000)});
+console.log(JSON.stringify(r,null,1),e);await b.close()})()

@@ -1,0 +1,1 @@
+{"name":"polsterhaus-shop","private":true,"scripts":{"test":"node tests/smoke.js","security":"node tests/security-anon-user.js && node tests/security-spam.js && node tests/security-orders.js","katalog":"python3 build_katalog.py"},"devDependencies":{"playwright-core":"^1.66.0"}}
