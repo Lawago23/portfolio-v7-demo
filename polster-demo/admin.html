@@ -1,0 +1,32 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin – Polsterhaus Muster (Demo)</title><link rel="stylesheet" href="style.css">
+<style>.ad{max-width:960px;margin:0 auto;padding:24px 20px}.pan{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;margin-bottom:20px}
+.pan h2{font-size:22px}.f{display:grid;gap:10px}.f label{font-size:13px;color:var(--mut);display:grid;gap:4px}.f input,.f select,.f textarea{padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;font:inherit}
+.row{display:grid;grid-template-columns:70px 1fr auto;gap:14px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}.row .th{width:70px;height:50px;border-radius:8px;overflow:hidden;background:#efe6d8;display:flex;align-items:center;justify-content:center}.row .th img,.row .th svg{width:100%;height:100%;object-fit:cover}
+.sm{padding:7px 14px;font-size:13px}.ok{color:#2e7d4f;font-weight:600}.stat{display:flex;gap:24px;flex-wrap:wrap}.stat b{font:700 28px Georgia,serif;display:block;color:var(--acc2)}
+#login{max-width:340px;margin:90px auto}</style></head><body>
+<div id="login" class="pan"><h2>Admin-Login</h2><p class="sub">Demo-Passwort: <b>demo</b></p><div class="f"><input id="pw" type="password" placeholder="Passwort"><button class="btn" id="go">Anmelden</button></div></div>
+<div class="ad" id="app" hidden>
+<p><a href="index.html">← zur Webseite</a> <span id="msg" class="ok"></span></p><h1 style="font-size:30px">Ihr Bereich zum Bearbeiten</h1>
+<div class="pan"><h2>Besucher (nur mit Einwilligung gemessen)</h2><div class="stat"><div><b id="v-all">0</b>Aufrufe gesamt</div><div><b id="v-7">0</b>letzte 7 Tage</div></div></div>
+<div class="pan"><h2>Aktion / Angebot oben auf der Seite</h2><div class="f"><label><span><input type="checkbox" id="a-on"> Aktion anzeigen</span></label><label>Text<input id="a-t"></label><button class="btn sm" id="a-s">Speichern</button></div></div>
+<div class="pan"><h2>Startseite</h2><div class="f"><label>Überschrift<input id="h-t"></label><label>Text<textarea id="h-p" rows="2"></textarea></label><label>Titelbild wechseln<input type="file" id="h-f" accept="image/*"></label><button class="btn sm" id="h-s">Speichern</button> <button class="btn o sm" id="h-x">Bild entfernen</button></div></div>
+<div class="pan"><h2>Möbel</h2><div class="f" id="np"><label>Name<input id="n-n"></label><label>Kategorie<input id="n-k" list="kl" placeholder="z. B. Sofas"></label><datalist id="kl"></datalist><label>Preis (€)<input id="n-p" type="number"></label><label>Foto<input type="file" id="n-f" accept="image/*"></label><button class="btn sm" id="n-s">Möbel hinzufügen</button></div><div id="list" style="margin-top:14px"></div></div>
+<div class="pan"><button class="btn o sm" id="rs">Alles auf Ausgangszustand zurücksetzen</button><p class="sub" style="margin-top:10px">Demo: Änderungen werden in diesem Browser gespeichert. In der echten Version speichert der Server, und die Änderungen sind für alle Besucher sofort sichtbar.</p></div></div>
+<script src="store.js"></script><script>
+let D=laden();const $=i=>document.getElementById(i);
+function msg(t){$('msg').textContent=t;setTimeout(()=>$('msg').textContent='',2500)}
+function resize(file,cb){const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const s=Math.min(1,900/im.width),c=document.createElement('canvas');c.width=im.width*s;c.height=im.height*s;c.getContext('2d').drawImage(im,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',.82))};im.src=r.result};r.readAsDataURL(file)}
+function draw(){$('a-on').checked=D.aktion.aktiv;$('a-t').value=D.aktion.text;$('h-t').value=D.hero.titel;$('h-p').value=D.hero.text;
+ $('kl').innerHTML=[...new Set(D.produkte.map(p=>p.kat))].map(k=>`<option>${k}`).join('');
+ $('list').innerHTML=D.produkte.map(p=>`<div class="row"><div class="th">${bildHTML(p)}</div><div><b>${p.name}</b><br><span class="sub" style="margin:0">${p.kat} · ${p.preis} €</span></div><div><label class="btn o sm" style="cursor:pointer">Foto<input type="file" accept="image/*" data-f="${p.id}" hidden></label> <button class="btn o sm" data-d="${p.id}">Löschen</button></div></div>`).join('');
+ const v=D.visits,w=Date.now()-6048e5;$('v-all').textContent=v.length;$('v-7').textContent=v.filter(x=>x.t>w).length}
+function sv(t){speichern(D);draw();msg(t||'Gespeichert ✓')}
+$('go').onclick=()=>{if($('pw').value==='demo'){$('login').hidden=true;$('app').hidden=false;draw()}else $('pw').style.borderColor='red'};$('pw').onkeydown=e=>{if(e.key==='Enter')$('go').click()};
+$('a-s').onclick=()=>{D.aktion.aktiv=$('a-on').checked;D.aktion.text=$('a-t').value;sv()};
+$('h-s').onclick=()=>{D.hero.titel=$('h-t').value;D.hero.text=$('h-p').value;sv()};$('h-x').onclick=()=>{D.hero.bild='';sv()};
+$('h-f').onchange=e=>e.target.files[0]&&resize(e.target.files[0],u=>{D.hero.bild=u;sv('Titelbild gewechselt ✓')});
+$('n-s').onclick=()=>{const n=$('n-n').value.trim(),k=$('n-k').value.trim()||'Sonstiges',p=+$('n-p').value;if(!n||!p)return msg('Name und Preis fehlen');const add=b=>{D.produkte.unshift({id:Date.now(),name:n,kat:k,preis:p,farbe:'#8a7f72',form:'sofa',neu:true,bild:b||''});['n-n','n-k','n-p','n-f'].forEach(i=>$(i).value='');sv('Hinzugefügt ✓')};const f=$('n-f').files[0];f?resize(f,add):add()};
+$('list').onclick=e=>{const id=e.target.dataset.d;if(id&&confirm('Wirklich löschen?')){D.produkte=D.produkte.filter(p=>p.id!=id);sv('Gelöscht')}};
+$('list').onchange=e=>{const id=e.target.dataset.f;if(id&&e.target.files[0])resize(e.target.files[0],u=>{D.produkte.find(p=>p.id==id).bild=u;sv('Foto gewechselt ✓')})};
+$('rs').onclick=()=>{if(confirm('Alles zurücksetzen?')){reset();D=laden();draw();msg('Zurückgesetzt')}};
+</script></body></html>
