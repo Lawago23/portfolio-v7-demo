@@ -13,7 +13,7 @@ const CLIENT={
  ratenkauf:true,
  demo:true
 };
-const BUILD='2026-11-25 22:30';
+const BUILD='2026-11-25 23:00';
 
 // Automatische Aktualisierung: lädt die Seite neu, wenn eine neuere Version online ist (kein manuelles Cache-Leeren nötig)
 (async()=>{try{const t=await (await fetch('config.js?nc='+Date.now(),{cache:'no-store'})).text();const m=t.match(/BUILD='([^']+)'/);if(m&&m[1]!==BUILD&&!sessionStorage.getItem('rl_'+m[1])){sessionStorage.setItem('rl_'+m[1],'1');const u=new URL(location.href);u.searchParams.set('b',m[1]);location.replace(u.toString())}}catch(e){}})();
