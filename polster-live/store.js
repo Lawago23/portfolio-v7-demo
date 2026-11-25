@@ -1,8 +1,8 @@
 const SB=supabase.createClient(SUPA_URL,SUPA_KEY);
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const webpPath=u=>/^img\/(.+)\.jpg$/.test(u||'')?u.replace(/\.jpg$/,'.webp'):u;
 const safeHex=h=>/^#[0-9a-fA-F]{6}$/.test(h||'')?h:'#888888';
-const safeUrl=u=>/^(https:\/\/[a-z0-9.-]+\.supabase\.co\/|img\/|models\/|data:image\/(jpeg|png|webp);base64,)/i.test(u||'')?u:'';
+const webpPath=u=>/^img\/(.+)\.jpg$/.test(u||'')?u.replace(/\.jpg$/,'.webp'):u;
+const safeUrl=u=>/^(https:\/\/[a-z0-9.-]+\.supabase\.co\/|img\/|models\/|data:image\/(jpeg|png|webp);base64,)/i.test(u||'')?webpPath(u):'';
 const FILIALEN=(typeof CLIENT!=='undefined'&&CLIENT.filialen)||['Filiale 1'];
 const STEPS=['Bestellung eingegangen','Wird vorbereitet','Versandt','In Zustellung','Zugestellt'];
 function jl(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}}
