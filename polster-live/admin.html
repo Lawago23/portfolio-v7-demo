@@ -1,0 +1,66 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin – Polsterhaus Muster (Demo)</title><link rel="stylesheet" href="style.css?v=8">
+<style>.ad{max-width:980px;margin:0 auto;padding:20px}.pan{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;margin-bottom:18px}.pan h2{font-size:21px}
+.f{display:grid;gap:10px}.f label{font-size:13px;color:var(--mut);display:grid;gap:4px}.f input,.f select,.f textarea{padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;font:inherit;width:100%}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.row{display:grid;grid-template-columns:72px 1fr auto;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}.th{width:72px;height:54px;border-radius:8px;overflow:hidden;background:#eceee9}.th img,.th svg{width:100%;height:100%;object-fit:cover}
+.sm{padding:7px 14px;font-size:13px}.ok{color:#2e7d4f;font-weight:700}.stat{display:flex;gap:28px;flex-wrap:wrap}.stat b{font:700 28px Georgia,serif;display:block;color:var(--acc2)}#login{max-width:340px;margin:80px auto}
+.fr{display:grid;grid-template-columns:44px 1fr 1fr auto;gap:8px;align-items:center;margin-bottom:8px}.fr input[type=color]{padding:2px;height:38px}.fr .pv{width:44px;height:34px;border-radius:6px;overflow:hidden;background:#eceee9;grid-column:1}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}.tab{padding:9px 16px;border:1.5px solid var(--line);border-radius:999px;background:#fff;cursor:pointer}.tab.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+.hint{background:#eef5f0;border-radius:10px;padding:10px 14px;font-size:14px;color:var(--acc2);margin-bottom:14px}
+@media(max-width:700px){.g2{grid-template-columns:1fr}.fr{grid-template-columns:44px 1fr auto}.fr .pf{grid-column:2/4}}</style></head><body>
+<div id="login" class="pan"><h2>Admin-Login</h2><div class="f"><input id="em" type="email" placeholder="E-Mail"><input id="pw" type="password" placeholder="Passwort"><button class="btn" id="go">Anmelden</button><span id="le" style="color:#b3261e;font-size:13px"></span></div></div>
+<div class="ad" id="app" hidden>
+<p><a href="index.html">← zur Webseite ansehen</a> <span id="msg" class="ok"></span></p><h1 style="font-size:28px;margin:6px 0 12px">Ihr Bereich zum Selbst-Bearbeiten</h1>
+<div class="hint">Alle Änderungen erscheinen sofort auf der Webseite. Reihenfolge: Möbel anlegen oder ändern → Aktion einstellen → Webseite ansehen.</div>
+<div class="tabs"><span class="tab on" data-t="m">Möbel</span><span class="tab" data-t="a">Aktion &amp; Startseite</span><span class="tab" data-t="o">Bestellungen</span><span class="tab" data-t="s">Besucher</span></div>
+
+<div id="t-m"><div class="pan"><button class="btn" id="new">+ Neues Möbelstück anlegen</button><div id="list" style="margin-top:14px"></div></div>
+<div class="pan" id="ed" hidden><h2 id="ed-h">Möbelstück bearbeiten</h2><div class="f">
+<div class="g2"><label>Name<input id="e-n"></label><label>Kategorie<input id="e-k" list="kl" placeholder="z. B. Sofas"></label></div><datalist id="kl"></datalist>
+<div class="g2"><label>Preis (€)<input id="e-p" type="number"></label><label>Aktionspreis (€, leer = keine Aktion)<input id="e-a" type="number"></label></div>
+<label>Beschreibung<textarea id="e-b" rows="3"></textarea></label><label>Material<input id="e-m" placeholder="z. B. Webstoff, Buchenholzfüße"></label>
+<label><span><input type="checkbox" id="e-neu" style="width:auto"> Als „Neu“ kennzeichnen</span></label>
+<div><div class="note" style="margin-bottom:6px"><b>Farben und Fotos</b>: je Farbe Name, Farbton und ein Foto dieser Farbe. Ohne Foto färbt die Seite das erste Foto automatisch um.</div><div id="fr"></div><button class="btn o sm" id="fadd">+ Farbe hinzufügen</button></div>
+<div style="display:flex;gap:10px"><button class="btn" id="e-s">Speichern</button><button class="btn o" id="e-x">Abbrechen</button></div></div></div></div>
+
+<div id="t-a" hidden><div class="pan"><h2>Aktion / Angebot (Balken oben auf der Seite)</h2><div class="f"><label><span><input type="checkbox" id="a-on" style="width:auto"> Aktion anzeigen</span></label><label>Text<input id="a-t"></label><button class="btn sm" id="a-s">Speichern</button></div></div>
+<div class="pan"><h2>Startseite</h2><div class="f"><label>Überschrift<input id="h-t"></label><label>Text<textarea id="h-p" rows="2"></textarea></label><label>Titelbild wechseln<input type="file" id="h-f" accept="image/*"></label><div style="display:flex;gap:10px"><button class="btn sm" id="h-s">Speichern</button><button class="btn o sm" id="h-x">Standardbild</button></div></div></div></div>
+
+<div id="t-o" hidden><div class="pan"><h2>Bestellungen</h2><div id="ol"></div></div></div>
+<div id="t-s" hidden><div class="pan"><h2>Besucher (nur mit Einwilligung gemessen)</h2><div class="stat"><div><b id="v-all">0</b>Aufrufe gesamt</div><div><b id="v-7">0</b>letzte 7 Tage</div></div></div>
+<div class="pan"><button class="btn o sm" id="lo">Abmelden</button><p class="sub" style="margin-top:10px">Alle Änderungen werden in der Datenbank gespeichert und sind sofort für alle Besucher sichtbar.</p></div></div>
+</div>
+<script src="vendor/supabase.js"></script><script src="store.js?v=1"></script><script>
+let D=null,E=null,O=[],V=[];const $=i=>document.getElementById(i);
+function msg(t){$('msg').textContent=t;setTimeout(()=>$('msg').textContent='',3000)}
+function resize(file,cb){const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const s=Math.min(1,1000/im.width),c=document.createElement('canvas');c.width=im.width*s;c.height=im.height*s;c.getContext('2d').drawImage(im,0,0,c.width,c.height);c.toBlob(b=>cb(b),'image/jpeg',.82)};im.src=r.result};r.readAsDataURL(file)}
+async function upload(file){return new Promise(res=>resize(file,async b=>{const n=Date.now()+'-'+Math.random().toString(36).slice(2,7)+'.jpg';const r=await SB.storage.from('photos').upload(n,b,{contentType:'image/jpeg'});if(r.error){msg('Upload fehlgeschlagen: '+r.error.message);res(null)}else res(SB.storage.from('photos').getPublicUrl(n).data.publicUrl)}))}
+async function reload(){D=await loadData();const o=await SB.from('orders').select('*').order('created_at',{ascending:false});O=o.data||[];const v=await SB.from('visits').select('t');V=v.data||[];draw()}
+function draw(){$('a-on').checked=!!D.aktion.aktiv;$('a-t').value=D.aktion.text||'';$('h-t').value=D.hero.titel||'';$('h-p').value=D.hero.text||'';
+ $('kl').innerHTML=[...new Set(D.produkte.map(p=>p.kat))].map(k=>`<option>${k}`).join('');
+ $('list').innerHTML=D.produkte.map(p=>`<div class="row"><div class="th">${bildHTML(p,0)}</div><div><b>${p.name}</b><br><span class="note">${p.kat} · ${preisHTML(p)} · ${(p.farben||[]).length} Farben</span></div><div><button class="btn o sm" data-e="${p.id}">Bearbeiten</button> <button class="btn o sm" data-d="${p.id}">Löschen</button></div></div>`).join('');
+ const w=Date.now()-6048e5;$('v-all').textContent=V.length;$('v-7').textContent=V.filter(x=>new Date(x.t).getTime()>w).length;
+ $('ol').innerHTML=O.length?O.map(x=>`<div class="row" style="grid-template-columns:1fr auto"><div><b>${x.id}</b> · ${x.name} · ${(+x.total).toLocaleString('de-DE')} €<br><span class="note">${x.items.map(i=>i.q+'× '+i.n).join(', ')} · ${x.lv}: ${x.ort}</span></div><select data-o="${x.id}">${STEPS.map((s,i)=>`<option value="${i}"${i===x.status?' selected':''}>${s}</option>`).join('')}</select></div>`).join(''):'<p class="note">Noch keine Bestellungen.</p>'}
+function frRow(f,i){return `<div class="fr" data-i="${i}"><div class="pv">${f.bild?`<img src="${f.bild}" style="width:100%;height:100%;object-fit:cover">`:''}</div><input class="fn" placeholder="Farbname" value="${f.n||''}"><input class="fh" type="color" value="${f.hex||'#888888'}"><button class="btn o sm" data-fx="${i}">✕</button><label class="btn o sm pf" style="cursor:pointer;text-align:center">Foto dieser Farbe<input type="file" accept="image/*" data-ff="${i}" hidden></label></div>`}
+function edit(id){E=id?JSON.parse(JSON.stringify(D.produkte.find(p=>p.id===id))):{id:null,name:'',kat:'',preis:0,aktion:0,form:'sofa',neu:true,beschr:'',material:'',farben:[{n:'Standard',hex:'#8a7f72',bild:''}]};
+ $('ed-h').textContent=id?'Möbelstück bearbeiten':'Neues Möbelstück';$('e-n').value=E.name;$('e-k').value=E.kat;$('e-p').value=E.preis||'';$('e-a').value=E.aktion||'';$('e-b').value=E.beschr||'';$('e-m').value=E.material||'';$('e-neu').checked=!!E.neu;drawF();$('ed').hidden=false;$('ed').scrollIntoView({behavior:'smooth'})}
+function drawF(){$('fr').innerHTML=E.farben.map(frRow).join('')}
+function readF(){document.querySelectorAll('#fr .fr').forEach(r=>{const f=E.farben[+r.dataset.i];f.n=r.querySelector('.fn').value;f.hex=r.querySelector('.fh').value})}
+async function start(){try{await reload();$('login').hidden=true;$('app').hidden=false}catch(e){msg('Fehler: '+e.message)}}
+async function boot(){const u=await initAuth();if(!u)return;const r=await SB.rpc('is_admin');if(r.data===true)start();else $('le').textContent='Dieses Konto ist kein Admin-Konto.'}
+$('go').onclick=async()=>{$('le').textContent='';const r=await SB.auth.signInWithPassword({email:$('em').value.trim(),password:$('pw').value});if(r.error){$('le').textContent='Anmeldung fehlgeschlagen';return}boot()};$('pw').onkeydown=e=>{if(e.key==='Enter')$('go').click()};
+$('lo').onclick=async()=>{await SB.auth.signOut();location.reload()};
+document.querySelector('.tabs').onclick=e=>{const t=e.target.dataset.t;if(!t)return;document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.t===t));['m','a','o','s'].forEach(k=>$('t-'+k).hidden=k!==t)};
+$('new').onclick=()=>edit(null);$('e-x').onclick=()=>{$('ed').hidden=true};
+$('list').onclick=async e=>{const id=+e.target.dataset.e;if(id)edit(id);const d=+e.target.dataset.d;if(d&&confirm('Wirklich löschen?')){const r=await SB.from('products').delete().eq('id',d);if(r.error)return msg(r.error.message);await reload();msg('Gelöscht')}};
+$('fadd').onclick=()=>{readF();E.farben.push({n:'',hex:'#888888',bild:''});drawF()};
+$('fr').onclick=e=>{const x=e.target.dataset.fx;if(x!==undefined){readF();E.farben.splice(+x,1);if(!E.farben.length)E.farben.push({n:'Standard',hex:'#888888',bild:''});drawF()}};
+$('fr').onchange=async e=>{const i=e.target.dataset.ff;if(i!==undefined&&e.target.files[0]){readF();msg('Foto wird hochgeladen …');const u=await upload(e.target.files[0]);if(u){E.farben[+i].bild=u;drawF();msg('Foto hochgeladen ✓')}}};
+$('e-s').onclick=async()=>{readF();const row={name:$('e-n').value.trim(),kat:$('e-k').value.trim()||'Sonstiges',preis:+$('e-p').value,aktion:+$('e-a').value||0,beschr:$('e-b').value,material:$('e-m').value,neu:$('e-neu').checked,farben:E.farben,form:E.form||'sofa'};if(!row.name||!row.preis)return msg('Name und Preis fehlen');
+ const r=E.id?await SB.from('products').update(row).eq('id',E.id):await SB.from('products').insert({...row,sort:-1});if(r.error)return msg(r.error.message);$('ed').hidden=true;await reload();msg('Möbelstück gespeichert ✓')};
+$('a-s').onclick=async()=>{const r=await SB.from('settings').update({aktion:{...D.aktion,aktiv:$('a-on').checked,text:$('a-t').value}}).eq('id',1);r.error?msg(r.error.message):(await reload(),msg('Gespeichert ✓'))};
+$('h-s').onclick=async()=>{const r=await SB.from('settings').update({hero:{...D.hero,titel:$('h-t').value,text:$('h-p').value}}).eq('id',1);r.error?msg(r.error.message):(await reload(),msg('Gespeichert ✓'))};
+$('h-x').onclick=async()=>{await SB.from('settings').update({hero:{...D.hero,bild:'img/hero.jpg'}}).eq('id',1);await reload();msg('Standardbild ✓')};
+$('h-f').onchange=async e=>{if(!e.target.files[0])return;msg('Foto wird hochgeladen …');const u=await upload(e.target.files[0]);if(!u)return;await SB.from('settings').update({hero:{...D.hero,bild:u}}).eq('id',1);await reload();msg('Titelbild gewechselt ✓')};
+$('ol').onchange=async e=>{const id=e.target.dataset.o;if(!id)return;const r=await SB.from('orders').update({status:+e.target.value}).eq('id',id);r.error?msg(r.error.message):msg('Status geändert ✓')};
+boot();
+</script></body></html>
