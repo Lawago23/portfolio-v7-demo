@@ -21,9 +21,10 @@
 <div><div class="note" style="margin-bottom:6px">Lieferung / Abholung</div><label class="opt"><input type="radio" name="lv" value="Lieferung" checked> Lieferung nach Hause (ab 49 €, Möbel-Spedition)</label><label class="opt"><input type="radio" name="lv" value="Abholung"> Abholung im Geschäft (kostenlos)</label></div>
 <label id="adr">Lieferadresse<input id="co-a" placeholder="Straße, PLZ, Ort"></label><label id="fil" hidden>Geschäft<select id="co-f"></select></label>
 <div><div class="note" style="margin-bottom:6px">Zahlung (Demo, es wird nichts abgebucht)</div><label class="opt"><input type="radio" name="zh" value="Karte" checked> Kreditkarte</label><label class="opt"><input type="radio" name="zh" value="PayPal"> PayPal</label><label class="opt"><input type="radio" name="zh" value="Rechnung"> Rechnung</label><label class="opt"><input type="radio" name="zh" value="Bar"> Barzahlung bei Abholung</label></div>
-<div style="font-weight:700;display:flex;justify-content:space-between"><span>Gesamt</span><span id="co-s"></span></div><button class="btn">Kostenpflichtig bestellen</button><button type="button" class="btn o" id="co-x">Abbrechen</button></form></div></div>
+<label class="opt"><input type="checkbox" required> Ich akzeptiere die <a href="agb.html" target="_blank">AGB</a> und die <a href="widerruf.html" target="_blank">Widerrufsbelehrung</a>.</label><div style="font-weight:700;display:flex;justify-content:space-between"><span>Gesamt</span><span id="co-s"></span></div><button class="btn">Kostenpflichtig bestellen</button><button type="button" class="btn o" id="co-x">Abbrechen</button></form></div></div>
 <div class="mod" id="m-lg"><div class="bx"><h2 id="lg-h">Anmelden</h2><form id="flg" style="display:grid;gap:12px"><label id="lg-nl" hidden>Name<input id="lg-n"></label><label>E-Mail<input type="email" required id="lg-e"></label><label>Passwort<input type="password" required minlength="6" id="lg-p"></label><button class="btn" id="lg-b">Anmelden</button><button type="button" class="lnk" id="lg-sw">Noch kein Konto? Registrieren</button><button type="button" class="btn o" id="lg-x">Schließen</button><p id="lg-err" style="color:#b3261e;font-size:14px;margin:0"></p><p class="note">Passwort mindestens 6 Zeichen.</p></form></div></div>
-<footer><div class="wrap"><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a> · <a href="admin.html">Admin</a> · <a href="#" data-cc="show-preferencesModal">Cookie-Einstellungen</a> · <a href="konto.html">Mein Konto / Bestellungen</a></div></footer>
+<div id="um" class="um" hidden><a href="konto.html">Meine Bestellungen</a><a href="#" id="um-wl">Merkzettel</a><a href="#" id="um-out">Abmelden</a></div><div id="toast" class="toast" hidden></div>
+<footer><div class="wrap"><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a> · <a href="agb.html">AGB</a> · <a href="widerruf.html">Widerruf</a> · <a href="admin.html">Admin</a> · <a href="#" data-cc="show-preferencesModal">Cookie-Einstellungen</a> · <a href="konto.html">Mein Konto / Bestellungen</a></div></footer>
 <script src="vendor/supabase.js"></script><script src="store.js?v=2"></script><script src="vendor/cc.js"></script><script>
 (async()=>{await initAuth();
 const D=await loadData();let kat='Alle';
@@ -66,7 +67,7 @@ function lv(){return document.querySelector('[name=lv]:checked').value}
 function upd(){const ab=lv()==='Abholung';$('adr').hidden=ab;$('fil').hidden=!ab;$('co-a').required=!ab;$('co-s').textContent=eur(sumNow()+(ab?0:49))}
 $('co-f').innerHTML=FILIALEN.map(f=>`<option>${f}`).join('');
 document.querySelectorAll('[name=lv]').forEach(r=>r.onchange=upd);
-$('dk').onclick=()=>{const u=user.get();if(!u){openCart(false);lgOpen('Zum Bestellen bitte anmelden');return}$('co-n').value=u.name;$('co-e').value=u.email;openCart(false);$('m-co').classList.add('on');upd()};
+$('dk').onclick=()=>{const u=user.get();if(!u){openCart(false);window.__afterLogin=()=>$('dk').click();lgOpen('Zum Bestellen bitte anmelden oder registrieren');return}$('co-n').value=u.name;$('co-e').value=u.email;openCart(false);$('m-co').classList.add('on');upd()};
 $('co-x').onclick=()=>$('m-co').classList.remove('on');
 $('fco').onsubmit=async e=>{e.preventDefault();const c=cart.get(),ab=lv()==='Abholung';const u=user.get();const o={id:'PH-'+Math.floor(10000+Math.random()*89999),email:u.email,name:$('co-n').value,items:c.map(i=>{const p=D.produkte.find(x=>x.id==i.id);return{n:p.name+(i.c?' ('+i.c+')':''),q:i.q,pr:preisNum(p)}}),total:sumNow()+(ab?0:49),lv:lv(),ort:ab?$('co-f').value:$('co-a').value,zh:document.querySelector('[name=zh]:checked').value};
  const r=await SB.from('orders').insert(o);if(r.error){alert('Bestellung fehlgeschlagen: '+r.error.message);return}cart.set([]);drawCart();$('m-co').classList.remove('on');location.href='konto.html?neu='+o.id};
@@ -94,7 +95,12 @@ $('flg').onsubmit=async e=>{e.preventDefault();const em=$('lg-e').value.trim().t
  if(reg){r=await SB.auth.signUp({email:em,password:pw,options:{data:{name:$('lg-n').value||em}}});if(!r.error&&!r.data.session){alert('Bitte bestätigen Sie Ihre E-Mail-Adresse über den Link, den wir Ihnen gesendet haben.');return}}
  else r=await SB.auth.signInWithPassword({email:em,password:pw});
  if(r.error){const m=r.error.message||'';$('lg-err').textContent=/already|registered/i.test(m)?'Diese E-Mail ist schon registriert. Bitte anmelden.':/Invalid login/i.test(m)?'E-Mail oder Passwort falsch.':/at least 6|weak/i.test(m)?'Passwort muss mindestens 6 Zeichen haben.':/valid email|invalid/i.test(m)?'Bitte eine gültige E-Mail eingeben.':'Fehler: '+m;return}$('lg-err').textContent='';
- await initAuth();$('m-lg').classList.remove('on');acctxt()};
-function acctxt(){const u=user.get();$('acc').textContent=u?'Konto':'Anmelden';$('acc').href=u?'konto.html':'#'}
-$('acc').onclick=e=>{if(!user.get()){e.preventDefault();lgOpen()}};acctxt();drawCart();
+ await initAuth();$('m-lg').classList.remove('on');acctxt();toast(reg?'Konto erstellt. Willkommen, '+String(user.get().name).split(' ')[0]+'! Sie sind angemeldet.':'Willkommen zurück, '+String(user.get().name).split(' ')[0]+'!');if(window.__afterLogin){const f=window.__afterLogin;window.__afterLogin=null;f()}};
+function toast(t){const e=$('toast');e.textContent=t;e.hidden=false;clearTimeout(window.__tt);window.__tt=setTimeout(()=>e.hidden=true,4000)}
+function acctxt(){const u=user.get();$('acc').textContent=u?'👤 '+String(u.name).split(' ')[0]:'Anmelden';$('acc').href='#'}
+$('acc').onclick=e=>{e.preventDefault();if(!user.get()){lgOpen();return}$('um').hidden=!$('um').hidden};
+$('um-out').onclick=async e=>{e.preventDefault();await user.out();$('um').hidden=true;acctxt();toast('Sie wurden abgemeldet.')};
+$('um-wl').onclick=e=>{e.preventDefault();$('um').hidden=true;onlyWL=true;$('f-wl').classList.add('on');render();document.getElementById('ausstellung').scrollIntoView()};
+document.addEventListener('click',e=>{if(!e.target.closest('#um,#acc'))$('um').hidden=true});
+acctxt();drawCart();
 })();</script></body></html>
