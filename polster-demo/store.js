@@ -1,5 +1,5 @@
 // Gemeinsamer Datenspeicher (Demo: localStorage; Produktiv: Server/CMS)
-const KEY='polster_demo_v1';
+const KEY='polster_demo_v2';
 const DEFAULT={
  aktion:{aktiv:true,text:'Frühjahrsaktion: 15 % auf alle Polsterservice-Aufträge bis 31.03.',link:'#polsterei'},
  hero:{titel:'Polstermöbel, die zu Ihnen passen.',text:'Sofas, Sessel und Betten aus unserer Ausstellung – und die eigene Polsterei für Neubezug und Reparatur.',bild:'img/hero.jpg'},
