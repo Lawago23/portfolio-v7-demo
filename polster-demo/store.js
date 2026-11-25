@@ -35,7 +35,7 @@ function svg(p){const c=p.farbe,d=shade(c,-35),l=shade(c,28);const f=p.form;let 
  else if(f==='bett')s=`<rect x="44" y="40" width="212" height="60" rx="12" fill="${d}"/><rect x="40" y="96" width="220" height="46" rx="8" fill="${c}"/><rect x="54" y="84" width="92" height="26" rx="10" fill="${l}"/><rect x="154" y="84" width="92" height="26" rx="10" fill="${l}"/><rect x="40" y="142" width="10" height="16" fill="#3a2f28"/><rect x="250" y="142" width="10" height="16" fill="#3a2f28"/>`;
  else s=`<ellipse cx="150" cy="92" rx="62" ry="30" fill="${c}"/><rect x="88" y="92" width="124" height="38" rx="10" fill="${c}"/><ellipse cx="150" cy="92" rx="62" ry="26" fill="${l}"/><rect x="104" y="128" width="7" height="22" fill="#3a2f28"/><rect x="190" y="128" width="7" height="22" fill="#3a2f28"/>`;
  return `<svg viewBox="0 0 300 180" role="img" aria-label="${p.name}"><ellipse cx="150" cy="166" rx="120" ry="7" fill="rgba(0,0,0,.12)"/>${s}</svg>`}
-function bildHTML(p){return p.bild?`<img src="${p.bild}" alt="${p.name}">`:svg(p)}
+function bildHTML(p){if(p.bild)return `<img src="${p.bild}" alt="${p.name}">`;if(p.id<=8){window.__sv=window.__sv||{};window.__sv[p.id]=svg(p);return `<img src="img/p${p.id}.jpg" alt="${p.name}" loading="lazy" onerror="this.outerHTML=window.__sv[${p.id}]">`}return svg(p)}
 // Einwilligung (DSGVO): Statistik erst nach Klick
 function consent(){try{return JSON.parse(localStorage.getItem('polster_consent'))}catch(e){return null}}
 function trackVisit(){const d=laden();d.visits.push({t:Date.now(),p:location.pathname.split('/').pop()||'index'});if(d.visits.length>500)d.visits.shift();speichern(d)}
