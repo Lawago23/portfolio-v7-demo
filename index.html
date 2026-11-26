@@ -1286,6 +1286,87 @@ body::before{content:"";position:fixed;top:0;left:0;width:100%;height:100vh;heig
   </div>
 </section>
 
+<style>
+.rev{padding:clamp(80px,12vw,170px) var(--gut);background:var(--bg)}
+.rev .wrap{padding:0}
+.rev h2{font-family:var(--d);font-weight:700;line-height:1.05;font-size:clamp(34px,6vw,76px);letter-spacing:-.02em}
+.case{margin-top:48px;display:grid;gap:18px;border:1px solid rgba(242,239,232,.18);border-radius:var(--radius-lg);padding:clamp(22px,3vw,40px)}
+.case small{color:var(--acc);letter-spacing:.14em;text-transform:uppercase;font-size:12px}
+.case h3{font-family:var(--d);font-size:clamp(24px,3.4vw,40px);line-height:1.1}
+.case p{color:var(--mut);max-width:62ch;line-height:1.55}
+.case a{justify-self:start;color:var(--fg);border-bottom:1px solid var(--acc);padding-bottom:2px;text-decoration:none}
+.rv-list{margin-top:40px;display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))}
+.rv-item{border:1px solid rgba(242,239,232,.18);border-radius:var(--radius-md);padding:22px;display:grid;gap:10px;align-content:start}
+.rv-item .st{color:var(--acc);letter-spacing:.12em}
+.rv-item q{quotes:none;line-height:1.5}
+.rv-item b{font-family:var(--d)}
+.rv-empty{color:var(--mut);margin-top:40px}
+.rv-form{margin-top:48px;display:grid;gap:10px;max-width:560px}
+.rv-form input,.rv-form textarea,.rv-form select{font:inherit;color:inherit;background:transparent;border:1px solid currentColor;border-radius:12px;padding:14px 16px;opacity:.92}
+.rv-form select option{color:#000}
+.rv-form textarea{min-height:130px;resize:vertical}
+.rv-form button{cursor:pointer}
+.rv-form .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.rv-msg{min-height:1.4em;color:var(--acc)}
+</style>
+<section class="rev" id="bewertungen" aria-label="Bewertungen">
+  <div class="wrap">
+    <div class="section-tag"><span class="t-de">Referenzen</span><span class="t-ru">Кейсы и отзывы</span></div>
+    <h2 class="rv"><span class="t-de">Erster Case. Und Ihre Stimme.</span><span class="t-ru">Первый кейс. И ваш отзыв.</span></h2>
+    <div class="case rv">
+      <small><span class="t-de">Case 01</span><span class="t-ru">Кейс 01</span></small>
+      <h3>Polsterhaus</h3>
+      <p><span class="t-de">Shop-Website für ein Polstermöbelgeschäft: Katalog mit Filtern, Merkliste, Muster und Termine, Warenkorb, Admin-Bereich. Entstanden aus einer echten Anfrage eines Geschäfts in Saalfeld.</span><span class="t-ru">Сайт-магазин для мебельного салона: каталог с фильтрами, список избранного, образцы и записи, корзина, админка. Сделан по реальному запросу магазина из Саальфельда.</span></p>
+      <a href="polster-demo/" target="_blank" rel="noopener"><span class="t-de">Demo ansehen</span><span class="t-ru">Посмотреть демо</span></a>
+    </div>
+    <div class="rv-list" id="rvList"></div>
+    <p class="rv-empty" id="rvEmpty"><span class="t-de">Noch keine Bewertungen. Seien Sie die erste Stimme.</span><span class="t-ru">Отзывов пока нет. Будьте первым.</span></p>
+    <form class="rv-form rv" id="rvForm" novalidate>
+      <h3 style="font-family:var(--d);font-size:clamp(22px,3vw,32px)"><span class="t-de">Bewertung schreiben</span><span class="t-ru">Оставить отзыв</span></h3>
+      <input type="text" name="name" required minlength="2" maxlength="60" placeholder="Ihr echter Name / Ваше настоящее имя" autocomplete="name">
+      <select name="rating" aria-label="Bewertung / Оценка"><option value="5">5 / 5</option><option value="4">4 / 5</option><option value="3">3 / 5</option><option value="2">2 / 5</option><option value="1">1 / 5</option></select>
+      <textarea name="text" required minlength="10" maxlength="600" placeholder="Ihre Erfahrung / Ваш отзыв (10–600 Zeichen)"></textarea>
+      <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button type="submit" class="btn"><span class="t-de">Absenden</span><span class="t-ru">Отправить</span></button>
+      <div class="rv-msg" id="rvMsg" role="status"></div>
+      <small style="color:var(--mut)"><span class="t-de">Veröffentlichung nach kurzer Prüfung. Bitte nur echte Erfahrungen unter echtem Namen.</span><span class="t-ru">Публикуется после короткой проверки. Только настоящий опыт и настоящее имя.</span></small>
+    </form>
+  </div>
+</section>
+<script>
+(function(){
+  var U='https://jthmekehipiolsxtjavb.supabase.co/rest/v1/portfolio_reviews',K='sb_publishable__YUQh9Vgtda2nPwyxn-hTw_oMXZDe5-';
+  var H={apikey:K,Authorization:'Bearer '+K};
+  var list=document.getElementById('rvList'),empty=document.getElementById('rvEmpty'),form=document.getElementById('rvForm'),msg=document.getElementById('rvMsg');
+  function lang(){return document.documentElement.getAttribute('lang')==='ru'?'ru':'de'}
+  function load(){
+    fetch(U+'?select=name,text,rating&approved=eq.true&order=created_at.desc&limit=12',{headers:H}).then(function(r){return r.ok?r.json():[]}).then(function(a){
+      list.textContent='';
+      a.forEach(function(x){var d=document.createElement('div');d.className='rv-item';
+        var st=document.createElement('span');st.className='st';st.textContent='\u2605'.repeat(x.rating)+'\u2606'.repeat(5-x.rating);
+        var q=document.createElement('q');q.textContent=x.text;var b=document.createElement('b');b.textContent=x.name;
+        d.appendChild(st);d.appendChild(q);d.appendChild(b);list.appendChild(d)});
+      empty.style.display=a.length?'none':'';
+    }).catch(function(){});
+  }
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var f=new FormData(form);
+    if(f.get('website')){return}
+    var name=(f.get('name')||'').trim(),text=(f.get('text')||'').trim(),rating=parseInt(f.get('rating'),10);
+    var ru=lang()==='ru';
+    if(name.length<2||text.length<10){msg.textContent=ru?'Введите имя и отзыв (от 10 символов).':'Bitte Namen und Text (mind. 10 Zeichen) eingeben.';return}
+    if(localStorage.getItem('rvSent')&&Date.now()-parseInt(localStorage.getItem('rvSent'),10)<60000){msg.textContent=ru?'Подождите минуту.':'Bitte kurz warten.';return}
+    msg.textContent='…';
+    fetch(U,{method:'POST',headers:Object.assign({'Content-Type':'application/json',Prefer:'return=minimal'},H),body:JSON.stringify({name:name,text:text,rating:rating,lang:lang()})}).then(function(r){
+      if(r.ok||r.status===201){localStorage.setItem('rvSent',String(Date.now()));form.reset();msg.textContent=ru?'Спасибо! Отзыв появится после проверки.':'Danke! Ihre Bewertung erscheint nach kurzer Prüfung.'}
+      else{msg.textContent=ru?'Не удалось отправить, попробуйте позже.':'Senden fehlgeschlagen, bitte später erneut versuchen.'}
+    }).catch(function(){msg.textContent=ru?'Нет соединения.':'Keine Verbindung.'});
+  });
+  load();
+})();
+</script>
+
 <!-- ==================== CONTACTS (FIN) ==================== -->
 <footer class="fin" id="kontakt">
   <div class="wrap">
