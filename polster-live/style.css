@@ -148,3 +148,5 @@ body.nosc{overflow:hidden}.trust{display:flex;flex-wrap:wrap;gap:8px 14px;font-s
 .cartbtn{white-space:nowrap;display:inline-flex;align-items:center;gap:6px}@media(max-width:700px){.cartbtn{padding:8px 10px;font-size:13px}.acc{padding:8px 10px}.hd-r{gap:6px}.logo{font-size:15px}}
 
 .nbx{padding:30px}.nbgrid{display:grid;grid-template-columns:1fr 1fr;gap:34px;margin-top:14px}.nbgrid>*{min-width:0}@media(max-width:800px){.nbgrid{grid-template-columns:minmax(0,1fr);gap:16px}.nbx{padding:20px}}
+
+@media(max-width:430px){.acc:not(.in) span{display:none}.logo{font-size:14px}.cartbtn{padding:8px 10px}}
