@@ -52,12 +52,12 @@ function upd(){const ab=lv()==='Abholung';$('adr').hidden=ab;$('fil').hidden=!ab
  const sm=sumNow(),rab=Math.round(sm*codePct)/100,sh=ab?0:shipFee(sm),tot=sm-rab+sh;
  $('co-items').innerHTML=cart.get().map(i=>{const p=D.produkte.find(x=>x.id==i.id);if(!p)return'';const ci=Math.max(0,(p.farben||[]).findIndex(f=>f.n===i.c));return`<div class="sit"><div class="sim">${bildHTML(p,ci)}</div><div><b>${esc(p.name)}</b><div class="note">${esc(optTxt(i))}</div><div class="note">${i.q} × ${eur(unit(p,i))}</div></div><b>${eur(unit(p,i)*i.q)}</b></div>`}).join('');
  $('co-lines').innerHTML=`<div class="ln"><span>Zwischensumme</span><span>${eur(sm)}</span></div>${rab?`<div class="ln"><span>Gutschein</span><span>−${eur(rab)}</span></div>`:''}<div class="ln"><span>Versand</span><span>${sh?eur(sh):'kostenlos'}</span></div>`;
- $('co-s').textContent=eur(tot);$('co-s2').textContent=eur(tot);$('zh-info').textContent=ZH_INFO[document.querySelector('[name=zh]:checked').value]||'';
+ $('co-s').textContent=eur(tot);$('co-s2').textContent=eur(tot);$('co-redir').hidden=!/^(Karte|PayPal)$/.test(document.querySelector('[name=zh]:checked').value);$('zh-info').textContent=ZH_INFO[document.querySelector('[name=zh]:checked').value]||'';
  const f=$('co-f').value||'';$('co-map').href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent((f.match(/\((.*)\)/)||[,f])[1]+', '+CLIENT.plz+' '+CLIENT.ort)}
 $('co-f').innerHTML=FILIALEN.map(f=>`<option>${esc(f)}</option>`).join('');$('co-f').onchange=upd;
 document.querySelectorAll('[name=lv],[name=zh]').forEach(r=>r.onchange=upd);
-$('dk').onclick=()=>{const u=user.get();if(!u){openCart(false);window.__afterLogin=()=>$('dk').click();lgOpen('Zum Bestellen bitte anmelden oder registrieren');return}$('co-n').value=u.name;$('co-e').value=u.email;openCart(false);$('m-co').classList.add('on');upd()};
-$('co-x').onclick=()=>$('m-co').classList.remove('on');
+$('dk').onclick=()=>{const u=user.get();if(!u){openCart(false);window.__afterLogin=()=>$('dk').click();lgOpen('Zum Bestellen bitte anmelden oder registrieren');return}$('co-n').value=u.name;$('co-e').value=u.email;openCart(false);$('m-co').classList.add('on');document.body.classList.add('nosc');history.pushState({k:1},'','#kasse');window.scrollTo(0,0);upd()};
+function coClose(){$('m-co').classList.remove('on');document.body.classList.remove('nosc')}$('co-x').onclick=()=>{coClose();if(location.hash==='#kasse')history.back()};$('co-back').onclick=$('co-x').onclick;addEventListener('popstate',()=>{if(location.hash!=='#kasse')coClose()});
 $('co-ca').onclick=async()=>{const r=await SB.rpc('check_code',{p_code:$('co-c').value,p_sum:sumNow()});codePct=(r&&r.data)||0;toast(codePct?'Gutschein eingelöst: '+codePct+' % Rabatt':'Code ungültig oder Mindestbestellwert nicht erreicht');upd()};
 // Adress-Autovervollständigung (Photon, OpenStreetMap-Daten, Server in Deutschland)
 async function photon(q,extra){try{const r=await fetch('https://photon.komoot.io/api/?lang=de&limit=10&lat=51.1&lon=10.4&q='+encodeURIComponent(q)+(extra||''));const j=await r.json();return(j.features||[]).map(f=>f.properties).filter(p=>p.countrycode==='DE')}catch(e){return[]}}
@@ -74,7 +74,8 @@ $('fco').onsubmit=async e=>{e.preventDefault();const c=cart.get(),ab=lv()==='Abh
  const ort=ab?$('co-f').value:$('co-str').value.trim()+', '+$('co-plz').value+' '+$('co-ort').value.trim();
  const r=await SB.rpc('place_order',{p_items:c.map(i=>({id:i.id,q:i.q,c:i.c||'',g:i.g||'',s:i.s||''})),p_lv:lv(),p_ort:ort,p_zh:document.querySelector('[name=zh]:checked').value,p_name:$('co-n').value,p_tel:$('co-t').value,p_code:$('co-c').value||null});
  if(btn)btn.disabled=false;if(r.error){alert('Bestellung nicht möglich: '+r.error.message);return}
- cart.set([]);drawCart();$('m-co').classList.remove('on');
+ cart.set([]);drawCart();coClose();
+ await Promise.race([SB.functions.invoke('checkout',{body:{action:'mail',order_id:r.data.id}}).catch(()=>{}),new Promise(z=>setTimeout(z,6000))]);
  const zhv=document.querySelector('[name=zh]:checked').value;
  if(zhv==='Karte'||zhv==='PayPal'){const f=await SB.functions.invoke('checkout',{body:{action:'create',order_id:r.data.id,return_url:location.origin+location.pathname.replace(/[^/]*$/,'')+'konto.html'}});if(f.data&&f.data.url){location.href=f.data.url;return}}
  location.href='konto.html?neu='+encodeURIComponent(r.data.id)};
@@ -154,15 +155,15 @@ $('p-sh').onclick=async()=>{const u=location.origin+location.pathname+'?p='+cur.
  document.addEventListener('keydown',e=>{const w=wins().pop();if(!w)return;if(e.key==='Escape'){const x=w.querySelector('#p-x,#dx,#lg-x,#co-x,#mu-x,#cmp-close');if(x)x.click();else w.classList.remove('on')}
   if(e.key==='Tab'){const f=focusables(w);if(!f.length)return;const a=f[0],z=f[f.length-1];if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}}})})();
 // Login
-let reg=false;function lgOpen(t){reg=false;lgMode(t)}function lgMode(t){$('lg-h').textContent=t||(reg?'Registrieren':'Anmelden');$('lg-nl').hidden=!reg;$('lg-b').textContent=reg?'Konto erstellen':'Anmelden';$('lg-sw').textContent=reg?'Schon ein Konto? Anmelden':'Noch kein Konto? Registrieren';$('m-lg').classList.add('on')}
-$('lg-sw').onclick=()=>{reg=!reg;lgMode()};$('lg-x').onclick=()=>$('m-lg').classList.remove('on');
+let reg=false;function lgOpen(t){reg=false;lgMode(t)}function lgMode(t){$('lg-h').textContent=t||(reg?'Konto erstellen':'Anmelden');$('lg-nl').hidden=!reg;$('lg-b').textContent=reg?'Konto erstellen':'Anmelden';$('lg-t1').classList.toggle('on',!reg);$('lg-t2').classList.toggle('on',reg);$('lg-p').autocomplete=reg?'new-password':'current-password';$('lg-sub').textContent=reg?'Kostenlos registrieren, in 20 Sekunden fertig.':'Mit Konto sehen Sie Ihre Bestellungen und bestellen schneller.';$('m-lg').classList.add('on')}
+$('lg-t1').onclick=()=>{reg=false;lgMode()};$('lg-t2').onclick=()=>{reg=true;lgMode()};$('lg-eye').onclick=()=>{const p=$('lg-p');p.type=p.type==='password'?'text':'password'};$('lg-x').onclick=()=>$('m-lg').classList.remove('on');
 $('flg').onsubmit=async e=>{e.preventDefault();const em=$('lg-e').value.trim().toLowerCase(),pw=$('lg-p').value;let r;
  if(reg){r=await SB.auth.signUp({email:em,password:pw,options:{data:{name:$('lg-n').value||em}}});if(!r.error&&!r.data.session){alert('Bitte bestätigen Sie Ihre E-Mail-Adresse über den Link, den wir Ihnen gesendet haben.');return}}
  else r=await SB.auth.signInWithPassword({email:em,password:pw});
  if(r.error){const m=r.error.message||'';$('lg-err').textContent=/already|registered/i.test(m)?'Diese E-Mail ist schon registriert. Bitte anmelden.':/Invalid login/i.test(m)?'E-Mail oder Passwort falsch.':/at least 6|weak/i.test(m)?'Passwort muss mindestens 6 Zeichen haben.':/valid email|invalid/i.test(m)?'Bitte eine gültige E-Mail eingeben.':'Fehler: '+m;return}$('lg-err').textContent='';
  await initAuth();$('m-lg').classList.remove('on');acctxt();toast(reg?'Konto erstellt. Willkommen, '+String(user.get().name).split(' ')[0]+'! Sie sind angemeldet.':'Willkommen zurück, '+String(user.get().name).split(' ')[0]+'!');if(window.__afterLogin){const f=window.__afterLogin;window.__afterLogin=null;f()}};
 function toast(t){const e=$('toast');e.textContent=t;e.hidden=false;clearTimeout(window.__tt);window.__tt=setTimeout(()=>e.hidden=true,4000)}
-function acctxt(){const u=user.get();$('acc').textContent=u?'👤 '+String(u.name).split(' ')[0]:'Anmelden';$('acc').href='#'}
+function acctxt(){const u=user.get();$('acc-t').textContent=u?String(u.name).split(' ')[0]:'Anmelden';$('acc').classList.toggle('in',!!u);if(u){$('um-n').textContent=u.name;$('um-e').textContent=u.email}}
 $('acc').onclick=e=>{e.preventDefault();if(!user.get()){lgOpen();return}$('um').hidden=!$('um').hidden};
 $('um-out').onclick=async e=>{e.preventDefault();await user.out();$('um').hidden=true;acctxt();toast('Sie wurden abgemeldet.')};
 $('um-wl').onclick=e=>{e.preventDefault();$('um').hidden=true;onlyWL=true;$('f-wl').classList.add('on');render();document.getElementById('ausstellung').scrollIntoView()};

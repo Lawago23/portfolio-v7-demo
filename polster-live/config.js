@@ -16,7 +16,7 @@ const CLIENT={
  demo:true
 };
 const SUPA_URL='https://jthmekehipiolsxtjavb.supabase.co',SUPA_KEY='sb_publishable__YUQh9Vgtda2nPwyxn-hTw_oMXZDe5-';
-const BUILD='2026-11-26 04:00';
+const BUILD='2026-11-26 05:10';
 
 // Automatische Aktualisierung: lädt die Seite neu, wenn eine neuere Version online ist (kein manuelles Cache-Leeren nötig)
 (async()=>{try{const t=await (await fetch('config.js?nc='+Date.now(),{cache:'no-store'})).text();const m=t.match(/BUILD='([^']+)'/);if(m&&m[1]!==BUILD&&!sessionStorage.getItem('rl_'+m[1])){sessionStorage.setItem('rl_'+m[1],'1');const u=new URL(location.href);u.searchParams.set('b',m[1]);location.replace(u.toString())}}catch(e){}})();
