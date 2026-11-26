@@ -52,7 +52,7 @@ function upd(){const ab=lv()==='Abholung';$('adr').hidden=ab;$('fil').hidden=!ab
  const sm=sumNow(),rab=Math.round(sm*codePct)/100,sh=ab?0:shipFee(sm),tot=sm-rab+sh;
  $('co-items').innerHTML=cart.get().map(i=>{const p=D.produkte.find(x=>x.id==i.id);if(!p)return'';const ci=Math.max(0,(p.farben||[]).findIndex(f=>f.n===i.c));return`<div class="sit"><div class="sim">${bildHTML(p,ci)}</div><div><b>${esc(p.name)}</b><div class="note">${esc(optTxt(i))}</div><div class="note">${i.q} × ${eur(unit(p,i))}</div></div><b>${eur(unit(p,i)*i.q)}</b></div>`}).join('');
  $('co-lines').innerHTML=`<div class="ln"><span>Zwischensumme</span><span>${eur(sm)}</span></div>${rab?`<div class="ln"><span>Gutschein</span><span>−${eur(rab)}</span></div>`:''}<div class="ln"><span>Versand</span><span>${sh?eur(sh):'kostenlos'}</span></div>`;
- $('co-s').textContent=eur(tot);$('co-s2').textContent=eur(tot);$('co-redir').hidden=!/^(Karte|PayPal)$/.test(document.querySelector('[name=zh]:checked').value);$('zh-info').textContent=ZH_INFO[document.querySelector('[name=zh]:checked').value]||'';
+ $('co-s').textContent=eur(tot);$('co-s2').textContent=eur(tot);$('zh-info').textContent=ZH_INFO[document.querySelector('[name=zh]:checked').value]||'';
  const f=$('co-f').value||'';$('co-map').href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent((f.match(/\((.*)\)/)||[,f])[1]+', '+CLIENT.plz+' '+CLIENT.ort)}
 $('co-f').innerHTML=FILIALEN.map(f=>`<option>${esc(f)}</option>`).join('');$('co-f').onchange=upd;
 document.querySelectorAll('[name=lv],[name=zh]').forEach(r=>r.onchange=upd);
